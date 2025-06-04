@@ -1,0 +1,64 @@
+﻿@model List<Ecom.Models.Category>
+@{
+    ViewData["Title"] = "Manage Categories";
+
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Categories Management</h2>
+                <div>
+                    <a asp-action="CreateCategory" class="btn btn-success">Add New Category</a>
+                    <a asp-action="Index" class="btn btn-secondary">Back to Dashboard</a>
+                </div>
+            </div>
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show">
+                    @TempData["Success"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <div class="card">
+                <div class="card-body">
+                    @if (!Model.Any())
+                    {
+                        <p class="text-center text-muted">No categories found.</p>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Category Name</th>
+                                        <th>Description</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var category in Model)
+                                    {
+                                        <tr>
+                                            <td>@category.CategoryID</td>
+                                            <td><strong>@category.CategoryName</strong></td>
+                                            <td>@category.Description</td>
+                                            <td>
+                                                <a asp-action="EditCategory" asp-route-id="@category.CategoryID" class="btn btn-sm btn-outline-primary">Edit</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

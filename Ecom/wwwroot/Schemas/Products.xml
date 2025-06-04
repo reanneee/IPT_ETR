@@ -1,0 +1,29 @@
+﻿<Products>
+	<Product>
+		<ProductName>Coffee Mug</ProductName>
+		<Description>White ceramic coffee mug</Description>
+		<Price>12.99</Price>
+		<Stock>50</Stock>
+		<CategoryID>1</CategoryID>
+		<Image>/images/products/mug.jpg</Image>
+		<Visible>true</Visible>
+	</Product>
+	<Product>
+		<ProductName>Wireless Mouse</ProductName>
+		<Description>Ergonomic USB wireless mouse</Description>
+		<Price>25.50</Price>
+		<Stock>30</Stock>
+		<CategoryID></CategoryID>
+		<Image>/images/products/mouse.jpg</Image>
+		<Visible>true</Visible>
+	</Product>
+	<Product>
+		<ProductName>Notebook</ProductName>
+		<Description>100 pages spiral notebook</Description>
+		<Price>5.75</Price>
+		<Stock>120</Stock>
+		<CategoryID>2</CategoryID>
+		<Image>/images/products/notebook.jpg</Image>
+		<Visible>false</Visible>
+	</Product>
+</Products>

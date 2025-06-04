@@ -1,0 +1,98 @@
+﻿<!-- Views/Cart/Index.cshtml -->
+@model List<Ecom.Models.CartItem>
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<h1>Shopping Cart</h1>
+
+@if (Model.Any())
+{
+    <div class="row">
+        <div class="col-md-8">
+            @foreach (var item in Model)
+            {
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-3">
+                            @if (!string.IsNullOrEmpty(item.Image))
+                            {
+                                <img src="@item.Image" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="@item.ProductName">
+                            }
+                            else
+                            {
+                                <div class="bg-light d-flex align-items-center justify-content-center h-100 rounded-start">
+                                    <i class="fas fa-image fa-2x text-muted"></i>
+                                </div>
+                            }
+                        </div>
+                        <div class="col-md-9">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                        <h5 class="card-title">@item.ProductName</h5>
+                                        <p class="text-muted">Price: $@item.Price.ToString("F2")</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <form asp-action="UpdateQuantity" method="post" class="d-inline">
+                                            <input type="hidden" name="productId" value="@item.ProductID" />
+                                            <div class="input-group input-group-sm">
+                                                <input type="number" name="quantity" value="@item.Quantity" min="1" class="form-control" onchange="this.form.submit()">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-3 text-end">
+                                        <p class="fw-bold">$@item.Total.ToString("F2")</p>
+                                        <form asp-action="RemoveFromCart" method="post" class="d-inline">
+                                            <input type="hidden" name="productId" value="@item.ProductID" />
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Order Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <span>Total Items:</span>
+                        <span>@Model.Sum(x => x.Quantity)</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <strong>Total Amount:</strong>
+                        <strong>$@Model.Sum(x => x.Total).ToString("F2")</strong>
+                    </div>
+                    <hr>
+                    @if (Context.Session.GetString("UserName") != null)
+                    {
+                        <a asp-controller="Order" asp-action="Checkout" class="btn btn-primary w-100">
+                            Proceed to Checkout
+                        </a>
+                    }
+                    else
+                    {
+                        <p class="text-muted small">Please <a asp-controller="Account" asp-action="Login">login</a> to checkout</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center py-5">
+        <i class="fas fa-shopping-cart fa-4x text-muted mb-3"></i>
+        <h4>Your cart is empty</h4>
+        <p class="text-muted">Add some products to get started!</p>
+        <a asp-controller="Product" asp-action="Index" class="btn btn-primary">Continue Shopping</a>
+    </div>
+}

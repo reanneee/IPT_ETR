@@ -1,0 +1,158 @@
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.csproj.AssemblyReference.cache
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.AssemblyInfoInputs.cache
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.AssemblyInfo.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.csproj.CoreCompileInputs.cache
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.RazorAssemblyInfo.cache
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.RazorAssemblyInfo.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\staticwebassets\Ecom.StaticWebAssets.Manifest.cache
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\staticwebassets\Ecom.StaticWebAssets.xml
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\scopedcss\bundle\Ecom.styles.css
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.TagHelpers.input.cache
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.TagHelpers.output.cache
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.RazorCoreGenerate.cache
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Account\Register.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Cart\Index.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Home\About.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Home\Contact.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Order\Index.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Product\Details.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Product\Index.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.RazorTargetAssemblyInfo.cache
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.RazorTargetAssemblyInfo.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\ref\Ecom.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.pdb
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\appsettings.Development.json
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\appsettings.json
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\Ecom.exe
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\Ecom.deps.json
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\Ecom.runtimeconfig.json
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\Ecom.runtimeconfig.dev.json
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\Ecom.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\ref\Ecom.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\Ecom.pdb
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\Ecom.Views.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\Ecom.Views.pdb
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\BouncyCastle.Crypto.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\Google.Protobuf.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\K4os.Compression.LZ4.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\K4os.Compression.LZ4.Streams.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\K4os.Hash.xxHash.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\MySql.Data.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\Ubiety.Dns.Core.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\Zstandard.Net.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\Renci.SshNet.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\SshNet.Security.Cryptography.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\System.Configuration.ConfigurationManager.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.Views.pdb
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.csproj.CopyComplete
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Ecom.genruntimeconfig.cache
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\CreateProduct.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\EditProduct.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\Index.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\Products.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Order\Checkout.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Order\Details.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Cart\GuestCart.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Cart\CheckSession.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\Categories.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\CreateCategory.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\EditCategory.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\Orders.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\CreateUser.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\EditUser.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\ResetPassword.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\Users.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\Customers.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\appsettings.Development.json
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\appsettings.json
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\Ecom.exe
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\Ecom.deps.json
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\Ecom.runtimeconfig.json
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\Ecom.runtimeconfig.dev.json
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\Ecom.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\ref\Ecom.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\Ecom.pdb
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\Ecom.Views.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\Ecom.Views.pdb
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\BouncyCastle.Crypto.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\Google.Protobuf.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\K4os.Compression.LZ4.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\K4os.Compression.LZ4.Streams.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\K4os.Hash.xxHash.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\MySql.Data.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\Ubiety.Dns.Core.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\Zstandard.Net.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\Renci.SshNet.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\SshNet.Security.Cryptography.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\System.Configuration.ConfigurationManager.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.csproj.AssemblyReference.cache
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.AssemblyInfoInputs.cache
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.AssemblyInfo.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.csproj.CoreCompileInputs.cache
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.RazorAssemblyInfo.cache
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.RazorAssemblyInfo.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\staticwebassets\Ecom.StaticWebAssets.Manifest.cache
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\staticwebassets\Ecom.StaticWebAssets.xml
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\scopedcss\bundle\Ecom.styles.css
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.TagHelpers.input.cache
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.TagHelpers.output.cache
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.RazorCoreGenerate.cache
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Account\Register.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\Categories.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\CreateCategory.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\CreateProduct.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\CreateUser.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\Customers.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\EditCategory.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\EditProduct.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\EditUser.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\Index.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\Orders.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\Products.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\ResetPassword.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\UserDetails.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\Users.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Cart\CheckSession.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Cart\GuestCart.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Cart\Index.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Home\About.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Home\Contact.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Order\Checkout.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Order\Details.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Order\Index.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Product\Details.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Product\Index.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.RazorTargetAssemblyInfo.cache
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.RazorTargetAssemblyInfo.cs
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.Views.pdb
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.csproj.CopyComplete
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\ref\Ecom.dll
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.pdb
+C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.genruntimeconfig.cache
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\_ViewStart.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Shared\_AdminLayout.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\UploadXML.cshtml.g.cs

@@ -1,0 +1,85 @@
+﻿@model List<Ecom.Models.Order>
+@{
+    ViewData["Title"] = "Manage Orders";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Orders Management</h2>
+                <a asp-action="Index" class="btn btn-secondary">Back to Dashboard</a>
+            </div>
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show">
+                    @TempData["Success"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <div class="card">
+                <div class="card-body">
+                    @if (!Model.Any())
+                    {
+                        <p class="text-center text-muted">No orders found.</p>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Order Date</th>
+                                        <th>Total Amount</th>
+                                        <th>Status</th>
+                                        <th>Shipping Address</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var order in Model)
+                                    {
+                                        <tr>
+                                            <td>#@order.OrderID</td>
+                                            <td>User #@order.UserID</td>
+                                            <td>@order.OrderDate.ToString("MMM dd, yyyy")</td>
+                                            <td>$@order.TotalAmount.ToString("F2")</td>
+                                            <td>
+                                                <span class="badge @(order.Status == "Delivered" ? "bg-success" :
+                                                                     order.Status == "Shipped" ? "bg-info" :
+                                                                     order.Status == "Processing" ? "bg-warning" : "bg-secondary")">
+                                                    @order.Status
+                                                </span>
+                                            </td>
+                                            <td>@order.ShippingAddress</td>
+                                            <td>
+                                                <form method="post" asp-action="UpdateOrderStatus" class="d-inline">
+                                                    <input type="hidden" name="orderId" value="@order.OrderID" />
+                                                    <form method="post" asp-action="UpdateOrderStatus" class="d-inline">
+                                                        <input type="hidden" name="orderId" value="@order.OrderID" />
+                                                        <select name="status" class="form-select form-select-sm d-inline-block" style="width: auto;" onchange="this.form.submit()">
+                                                            <option value="Pending" selected="@(order.Status == "Pending")">Pending</option>
+                                                            <option value="Processing" selected="@(order.Status == "Processing")">Processing</option>
+                                                            <option value="Shipped" selected="@(order.Status == "Shipped")">Shipped</option>
+                                                            <option value="Delivered" selected="@(order.Status == "Delivered")">Delivered</option>
+                                                            <option value="Cancelled" selected="@(order.Status == "Cancelled")">Cancelled</option>
+                                                        </select>
+                                                    </form>
+                                                </form>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

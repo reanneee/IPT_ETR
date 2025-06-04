@@ -1,0 +1,94 @@
+﻿<!-- Views/Admin/EditUser.cshtml -->
+@model Ecom.Models.User
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-user-edit"></i> Edit User
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <input type="hidden" asp-for="UserID" />
+                        <input type="hidden" asp-for="CreatedAt" />
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="Firstname" class="form-label">First Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" asp-for="Firstname" required>
+                                    <span asp-validation-for="Firstname" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="Middlename" class="form-label">Middle Name</label>
+                                    <input type="text" class="form-control" asp-for="Middlename">
+                                    <span asp-validation-for="Middlename" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="Lastname" class="form-label">Last Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" asp-for="Lastname" required>
+                                    <span asp-validation-for="Lastname" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="Role" class="form-label">Role <span class="text-danger">*</span></label>
+                                    <select class="form-select" asp-for="Role" required>
+                                        <option value="">Select Role</option>
+                                        <option value="Customer">Customer</option>
+                                        <option value="Admin">Admin</option>
+                                    </select>
+                                    <span asp-validation-for="Role" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Email" class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" asp-for="Email" required>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Address" class="form-label">Address <span class="text-danger">*</span></label>
+                            <textarea class="form-control" asp-for="Address" rows="3" required></textarea>
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Note:</strong> To change the password, use the "Reset Password" option from the users list.
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Users")" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Back to Users
+                            </a>
+                            <div>
+                                <a href="@Url.Action("ResetPassword", new { id = Model.UserID })" class="btn btn-warning me-2">
+                                    <i class="fas fa-key"></i> Reset Password
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Update User
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

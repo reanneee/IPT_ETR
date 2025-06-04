@@ -1,0 +1,161 @@
+﻿@model Ecom.Models.Order
+
+@{ ViewData["Title"] = "Order Details"; }
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Order Details</h2>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Back to Orders</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Order #@Model.OrderID</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-3"><strong>Order Date:</strong></div>
+                        <div class="col-sm-9">@Model.OrderDate.ToString("MMMM dd, yyyy hh:mm tt")</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3"><strong>Status:</strong></div>
+                        <div class="col-sm-9">
+                            <span class="badge bg-@(Model.Status == "Delivered" ? "success" : Model.Status == "Processing" ? "warning" : Model.Status == "Shipped" ? "info" : "secondary")">
+                                @Model.Status
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3"><strong>Total Amount:</strong></div>
+                        <div class="col-sm-9">$@Model.TotalAmount.ToString("F2")</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3"><strong>Shipping Address:</strong></div>
+                        <div class="col-sm-9">@Model.ShippingAddress</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5>Order Items</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.OrderItems.Any())
+                    {
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderItems)
+                    {
+    <tr>
+        <td>@item.ProductName</td>
+        <td>@item.Quantity</td>
+        <td>$@item.PriceAtPurchase.ToString("F2")</td>
+        <td>$@((item.PriceAtPurchase * item.Quantity).ToString("F2"))</td>
+    </tr>}
+                </tbody>
+                <tfoot>
+                    <tr class="table-dark">
+                        <th colspan="3">Total</th>
+                        <th>$@Model.TotalAmount.ToString("F2")</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div> }
+                    else
+                    {
+        <p class="text-muted">No items found for this order.</p>}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h6>Order Status</h6>
+                </div>
+                <div class="card-body">
+                    <div class="timeline">
+                        <div class="timeline-item @(Model.Status == "Pending" || Model.Status == "Processing" || Model.Status == "Shipped" || Model.Status == "Delivered" ? "active" : "")">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">Order Placed</div>
+                        </div>
+                        <div class="timeline-item @(Model.Status == "Processing" || Model.Status == "Shipped" || Model.Status == "Delivered" ? "active" : "")">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">Processing</div>
+                        </div>
+                        <div class="timeline-item @(Model.Status == "Shipped" || Model.Status == "Delivered" ? "active" : "")">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">Shipped</div>
+                        </div>
+                        <div class="timeline-item @(Model.Status == "Delivered" ? "active" : "")">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">Delivered</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .timeline {
+        position: relative;
+        padding: 20px 0;
+    }
+
+    .timeline-item {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 20px;
+    }
+
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 20px;
+            bottom: -20px;
+            width: 2px;
+            background: #dee2e6;
+        }
+
+        .timeline-item:last-child:before {
+            display: none;
+        }
+
+    .timeline-marker {
+        position: absolute;
+        left: 6px;
+        top: 0;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #dee2e6;
+        border: 2px solid #fff;
+    }
+
+    .timeline-item.active .timeline-marker {
+        background: #28a745;
+    }
+
+    .timeline-content {
+        font-weight: 500;
+    }
+
+    .timeline-item.active .timeline-content {
+        color: #28a745;
+    }
+</style>

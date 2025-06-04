@@ -1,0 +1,75 @@
+﻿@model List<Ecom.Models.GuestCartItem>
+
+    @{
+    ViewData["Title"] = "Shopping Cart";
+    }
+
+    <div class="container mt-4">
+        <h2>Shopping Cart</h2>
+
+        @if (!Model.Any())
+        {
+        <div class="alert alert-info">
+            <h4>Your cart is empty</h4>
+            <p>Browse our products and add items to your cart.</p>
+            <a href="@Url.Action(" Index", "Product" )" class="btn btn-primary">Continue Shopping</a>
+        </div>
+        }
+        else
+        {
+        <div class="row">
+            <div class="col-md-8">
+                @foreach (var item in Model)
+                {
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-3">
+                            <img src="@item.Image" class="img-fluid rounded-start" alt="@item.ProductName" style="height: 150px; width: 100%; object-fit: cover;">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.ProductName</h5>
+                                <p class="card-text">
+                                    <strong>Price:</strong> $@item.Price.ToString("F2")<br>
+                                    <strong>Subtotal:</strong> $@item.Total.ToString("F2")
+                                </p>
+                                <div class="d-flex align-items-center">
+                                    <form asp-action="UpdateQuantity" method="post" class="d-inline">
+                                        <input type="hidden" name="productId" value="@item.ProductID" />
+                                        <div class="input-group" style="width: 150px;">
+                                            <input type="number" name="quantity" value="@item.Quantity" min="1" max="99" class="form-control" />
+                                            <button type="submit" class="btn btn-outline-primary">Update</button>
+                                        </div>
+                                    </form>
+                                    <form asp-action="RemoveFromCart" method="post" class="d-inline ms-3">
+                                        <input type="hidden" name="productId" value="@item.ProductID" />
+                                        <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to remove this item?')">Remove</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Order Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Total Items:</strong> @Model.Sum(x => x.Quantity)</p>
+                        <p><strong>Total Amount:</strong> $@Model.Sum(x => x.Total).ToString("F2")</p>
+                        <hr>
+                        <div class="alert alert-info">
+                            <strong>Sign in to checkout</strong><br>
+                            <small>Create an account or sign in to place your order.</small>
+                        </div>
+                        <a href="@Url.Action(" Login", "Account" )" class="btn btn-primary w-100 mb-2">Sign In</a>
+                        <a href="@Url.Action(" Register", "Account" )" class="btn btn-outline-primary w-100">Create Account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
