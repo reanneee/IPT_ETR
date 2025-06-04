@@ -477,6 +477,48 @@ namespace Ecom.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult Add([FromBody] AddToCartRequest request)
+        {
+            try
+            {
+                var userId = HttpContext.Session.GetInt32("UserID");
+
+                if (userId.HasValue)
+                {
+                    AddToUserCart(userId.Value, request.ProductId, request.Quantity);
+                }
+                else
+                {
+                    AddToGuestCart(request.ProductId, request.Quantity);
+                }
+
+                var cartCount = userId.HasValue ? GetUserCartCount(userId.Value) : GetGuestCartCount();
+
+                return Json(new
+                {
+                    success = true,
+                    message = "Product added to cart!",
+                    cartCount = cartCount
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Error adding product to cart: " + ex.Message
+                });
+            }
+        }
+
+        // Add this class to handle the JSON request
+        public class AddToCartRequest
+        {
+            public int ProductId { get; set; }
+            public int Quantity { get; set; } = 1;
+        }
+
     }
 
 }

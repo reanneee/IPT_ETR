@@ -4,55 +4,311 @@
     ViewData["Title"] = Model.ProductName;
 }
 
-<div class="row">
-    <div class="col-md-6">
-        @if (!string.IsNullOrEmpty(Model.Image))
-        {
-            <img src="@Model.Image" class="img-fluid rounded" alt="@Model.ProductName">
+<style>
+    .container-narrow {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        color: #2d5a4e;
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 20px;
+        transition: color 0.3s ease;
+    }
+
+    .back-button:hover {
+        color: #1e3d35;
+        text-decoration: none;
+    }
+
+    .back-button i {
+        margin-right: 8px;
+    }
+
+
+
+    @@keyframes slideInDown {
+        from {
+            transform: translateY(-100%);
+            opacity: 0;
         }
-        else
-        {
-            <div class="bg-light d-flex align-items-center justify-content-center rounded" style="height: 400px;">
-                <i class="fas fa-image fa-5x text-muted"></i>
-            </div>
+        to {
+            transform: translateY(0);
+            opacity: 1;
         }
-    </div>
-    <div class="col-md-6">
-        <h1>@Model.ProductName</h1>
-        <p class="lead">@Model.Description</p>
+    }
 
-        <div class="mb-3">
-            <span class="h3 text-primary">$@Model.Price.ToString("F2")</span>
-        </div>
+    .product-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        overflow: hidden;
+        margin: 20px 0;
+    }
 
-        <div class="mb-3">
-            <span class="badge bg-secondary">@Model.CategoryName</span>
-        </div>
+    .product-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
 
-        <div class="mb-3">
-            <strong>Stock Available:</strong> @Model.Stock units
-        </div>
+    .product-image:hover {
+        transform: scale(1.02);
+    }
 
-        @if (Model.Stock > 0)
-        {
-            <form asp-controller="Cart" asp-action="AddToCart" method="post">
-                <input type="hidden" name="productId" value="@Model.ProductID" />
-                <div class="row mb-3">
-                    <div class="col-4">
-                        <label for="quantity" class="form-label">Quantity:</label>
-                        <input type="number" class="form-control" name="quantity" value="1" min="1" max="@Model.Stock" />
-                    </div>
+    .image-placeholder {
+        height: 400px;
+        background: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed #dee2e6;
+    }
+
+    .product-content {
+        padding: 30px;
+    }
+
+    .product-title {
+        font-size: 2rem;
+        font-weight: 300;
+        color: #2d5a4e;
+        margin-bottom: 15px;
+    }
+
+    .product-description {
+        color: #6c757d;
+        margin-bottom: 20px;
+        line-height: 1.6;
+    }
+
+    .price {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #2d5a4e;
+        margin-bottom: 20px;
+    }
+
+    .product-info {
+        display: flex;
+        gap: 30px;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .category {
+        background: #2d5a4e;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .stock {
+        color: #28a745;
+        font-weight: 500;
+    }
+
+    .stock.low { color: #ffc107; }
+    .stock.out { color: #dc3545; }
+
+    .stock-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #28a745;
+    }
+
+    .stock-dot.low { background: #ffc107; }
+    .stock-dot.out { background: #dc3545; }
+
+    .cart-section {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .quantity-input {
+        width: 80px;
+        padding: 10px;
+        border: 2px solid #dee2e6;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .quantity-input:focus {
+        outline: none;
+        border-color: #2d5a4e;
+    }
+
+    .add-to-cart-btn {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .add-to-cart-btn:hover {
+        background: #218838;
+        transform: translateY(-1px);
+    }
+
+    .out-of-stock {
+        background: #dc3545;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    @@media (max-width: 768px) {
+        .product-content {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+        }
+
+        .product-info {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .cart-section {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+        }
+
+        .success-alert {
+            padding: 14px 16px;
+            margin-bottom: 15px;
+        }
+
+        .success-alert .alert-content {
+            gap: 10px;
+        }
+    }
+</style>
+
+<div class="container-narrow">
+    <a href="javascript:history.back()" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="success-alert" role="alert">
+            <div class="alert-content">
+                <div class="success-icon">
+                    <i class="fas fa-check"></i>
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg">
-                    <i class="fas fa-cart-plus"></i> Add to Cart
-                </button>
-            </form>
-        }
-        else
-        {
-            <div class="alert alert-warning">
-                <i class="fas fa-exclamation-triangle"></i> Out of Stock
+                <span>@TempData["SuccessMessage"]</span>
             </div>
-        }
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    }
+
+    <div class="product-card">
+        <div class="row g-0">
+            <div class="col-md-6">
+                @if (!string.IsNullOrEmpty(Model.Image))
+                {
+                    <img src="@Model.Image" class="product-image" alt="@Model.ProductName">
+                }
+                else
+                {
+                    <div class="image-placeholder">
+                        <i class="fas fa-image fa-4x text-muted"></i>
+                    </div>
+                }
+            </div>
+
+            <div class="col-md-6">
+                <div class="product-content">
+                    <h1 class="product-title">@Model.ProductName</h1>
+
+                    @if (!string.IsNullOrEmpty(Model.Description))
+                    {
+                        <p class="product-description">@Model.Description</p>
+                    }
+
+                    <div class="price">$@Model.Price.ToString("F2")</div>
+
+                    <div class="product-info">
+                        <div class="info-item">
+                            <span class="category">@Model.CategoryName</span>
+                        </div>
+
+                        <div class="info-item">
+                            <span class="stock-dot @(Model.Stock == 0 ? "out" : Model.Stock < 10 ? "low" : "")"></span>
+                            <span class="stock @(Model.Stock == 0 ? "out" : Model.Stock < 10 ? "low" : "")">
+                                @if (Model.Stock > 0)
+                                {
+                                    <span>@Model.Stock in stock</span>
+                                }
+                                else
+                                {
+                                    <span>Out of stock</span>
+                                }
+                            </span>
+                        </div>
+                    </div>
+
+                    @if (Model.Stock > 0)
+                    {
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                            <input type="hidden" name="productId" value="@Model.ProductID" />
+
+                            <div class="cart-section">
+                                <input type="number"
+                                       class="quantity-input"
+                                       name="quantity"
+                                       value="1"
+                                       min="1"
+                                       max="@Model.Stock"
+                                       title="Quantity" />
+
+                                <button type="submit" class="add-to-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+                        </form>
+                    }
+                    else
+                    {
+                        <div class="out-of-stock">
+                            <i class="fas fa-exclamation-triangle"></i> Currently Out of Stock
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 </div>
