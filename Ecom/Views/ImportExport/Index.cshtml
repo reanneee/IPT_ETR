@@ -1,0 +1,199 @@
+﻿@model List<Product>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Import/Export Products";
+}
+
+<div class="container-fluid">
+    <h2>Import/Export Products</h2>
+
+    <!-- Simple Action Buttons -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-success" onclick="exportToXML()">
+                    Export to XML
+                </button>
+                <button type="button" class="btn btn-primary" onclick="document.getElementById('xmlFileInput').click()">
+                    Import from XML
+                </button>
+            </div>
+
+            <!-- Hidden file input -->
+            <input type="file" id="xmlFileInput" accept=".xml" style="display: none;" onchange="handleFileSelect(this)">
+
+            <!-- Selected file display -->
+            <div id="selectedFileInfo" class="mt-2" style="display: none;">
+                <small>Selected: <span id="selectedFileName"></span></small>
+                <button type="button" class="btn btn-sm btn-outline-primary ms-2" onclick="importFromXML()">
+                    Import Now
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary ms-1" onclick="clearFileSelection()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Messages -->
+    <div id="statusMessage" class="alert" style="display: none;">
+        <div id="statusContent"></div>
+    </div>
+
+    <!-- Products List -->
+    <div class="card">
+        <div class="card-header">
+            <h5>Products (@Model.Count)</h5>
+        </div>
+        <div class="card-body">
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var product in Model)
+                            {
+                                <tr>
+                                    <td>@product.ProductID</td>
+                                    <td>
+                                        @product.ProductName
+                                        @if (!string.IsNullOrEmpty(product.Description))
+                                        {
+                                            <br><small class="text-muted">@(product.Description.Length > 30 ? product.Description.Substring(0, 30) + "..." : product.Description)</small>
+                                        }
+                                    </td>
+                                    <td>@(product.CategoryName ?? "No Category")</td>
+                                    <td>$@product.Price.ToString("F2")</td>
+                                    <td>@product.Stock</td>
+                                    <td>
+                                        @if (product.Visible)
+                                        {
+                                            <span class="badge bg-success">Visible</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Hidden</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-center text-muted">No products found.</p>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function showMessage(message, type = 'info') {
+        const messageDiv = document.getElementById('statusMessage');
+        const contentDiv = document.getElementById('statusContent');
+
+        messageDiv.className = `alert alert-${type}`;
+        messageDiv.style.display = 'block';
+        contentDiv.innerHTML = message;
+
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+            messageDiv.style.display = 'none';
+        }, 5000);
+    }
+
+    function exportToXML() {
+        const button = event.target;
+        button.disabled = true;
+        button.textContent = 'Exporting...';
+
+        fetch('@Url.Action("ExportToXML", "ImportExport")', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showMessage(data.message, 'success');
+            } else {
+                showMessage(data.message, 'danger');
+            }
+        })
+        .catch(error => {
+            showMessage('Export failed: ' + error.message, 'danger');
+        })
+        .finally(() => {
+            button.disabled = false;
+            button.textContent = 'Export to XML';
+        });
+    }
+
+    function handleFileSelect(input) {
+        const fileInfo = document.getElementById('selectedFileInfo');
+        const fileName = document.getElementById('selectedFileName');
+
+        if (input.files && input.files[0]) {
+            fileName.textContent = input.files[0].name;
+            fileInfo.style.display = 'block';
+        } else {
+            fileInfo.style.display = 'none';
+        }
+    }
+
+    function clearFileSelection() {
+        document.getElementById('xmlFileInput').value = '';
+        document.getElementById('selectedFileInfo').style.display = 'none';
+    }
+
+    function importFromXML() {
+        const button = event.target;
+        const fileInput = document.getElementById('xmlFileInput');
+
+        if (!fileInput.files || !fileInput.files[0]) {
+            showMessage('Please select a file first', 'warning');
+            return;
+        }
+
+        button.disabled = true;
+        button.textContent = 'Importing...';
+
+        const formData = new FormData();
+        formData.append('xmlFile', fileInput.files[0]);
+
+        fetch('@Url.Action("ImportFromXML", "ImportExport")', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showMessage(data.message, 'success');
+                clearFileSelection();
+                // Reload page after 2 seconds
+                setTimeout(() => window.location.reload(), 2000);
+            } else {
+                showMessage(data.message, 'danger');
+            }
+        })
+        .catch(error => {
+            showMessage('Import failed: ' + error.message, 'danger');
+        })
+        .finally(() => {
+            button.disabled = false;
+            button.textContent = 'Import Now';
+        });
+    }
+</script>

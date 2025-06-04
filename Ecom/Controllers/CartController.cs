@@ -74,7 +74,55 @@ namespace Ecom.Controllers
             }
 
             TempData["Success"] = "Product added to cart!";
+
+            // For AJAX requests, return JSON with cart count
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                var cartCount = userId.HasValue ? GetUserCartCount(userId.Value) : GetGuestCartCount();
+                return Json(new
+                {
+                    success = true,
+                    message = "Product added to cart!",
+                    cartCount = cartCount
+                });
+            }
+
             return RedirectToAction("Details", "Product", new { id = productId });
+        }
+
+        [HttpPost]
+        public IActionResult AddToCartAjax(int productId, int quantity = 1)
+        {
+            try
+            {
+                var userId = HttpContext.Session.GetInt32("UserID");
+
+                if (userId.HasValue)
+                {
+                    AddToUserCart(userId.Value, productId, quantity);
+                }
+                else
+                {
+                    AddToGuestCart(productId, quantity);
+                }
+
+                var cartCount = userId.HasValue ? GetUserCartCount(userId.Value) : GetGuestCartCount();
+
+                return Json(new
+                {
+                    success = true,
+                    message = "Product added to cart!",
+                    cartCount = cartCount
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Error adding product to cart: " + ex.Message
+                });
+            }
         }
 
         private void AddToUserCart(int userId, int productId, int quantity)
@@ -329,18 +377,6 @@ namespace Ecom.Controllers
             return items;
         }
 
-        // Debug action
-        public IActionResult CheckSession()
-        {
-            var sessionId = GetOrCreateSessionId();
-            ViewBag.SessionId = sessionId;
-            ViewBag.GuestCartCount = GetGuestCartCountForSession();
-            ViewBag.AllGuestCartCount = GetAllGuestCartCount();
-            ViewBag.RawGuestCartData = GetRawGuestCartData();
-            ViewBag.ProductsData = GetProductsData();
-
-            return View();
-        }
 
         private List<object> GetProductsData()
         {
@@ -369,75 +405,78 @@ namespace Ecom.Controllers
             return data;
         }
 
-        // Alternative method to get guest cart items without JOIN
-        public IActionResult TestGuestCartNoJoin()
-        {
-            var sessionId = GetOrCreateSessionId();
-            var guestCartItems = new List<object>();
+       
 
+        [HttpGet]
+        public IActionResult GetCartCount()
+        {
+            var userId = HttpContext.Session.GetInt32("UserID");
+            int count = 0;
+
+            if (userId.HasValue)
+            {
+                count = GetUserCartCount(userId.Value);
+            }
+            else
+            {
+                count = GetGuestCartCount();
+            }
+
+            return Json(new { count = count });
+        }
+
+        // Add these helper methods to your CartController
+
+        private int GetUserCartCount(int userId)
+        {
             try
             {
-                // Get GuestCart data first
-                var guestCartQuery = $"SELECT * FROM GuestCart WHERE SessionID = '{sessionId}'";
-                var guestCartDt = _db.SelectQuery(guestCartQuery);
+                var query = $@"SELECT SUM(ci.Quantity) as TotalCount 
+                      FROM CartItems ci
+                      JOIN Cart c ON ci.CartID = c.CartID
+                      WHERE c.UserID = {userId}";
 
-                foreach (DataRow gcRow in guestCartDt.Rows)
+                var result = _db.SelectQuery(query);
+
+                if (result.Rows.Count > 0 && result.Rows[0]["TotalCount"] != DBNull.Value)
                 {
-                    var productId = Convert.ToInt32(gcRow["ProductID"]);
-
-                    // Get product data separately
-                    var productQuery = $"SELECT ProductName, Price, Image FROM Products WHERE ProductID = {productId}";
-                    var productDt = _db.SelectQuery(productQuery);
-
-                    if (productDt.Rows.Count > 0)
-                    {
-                        var productRow = productDt.Rows[0];
-                        guestCartItems.Add(new
-                        {
-                            SessionID = gcRow["SessionID"].ToString(),
-                            ProductID = productId,
-                            Quantity = Convert.ToInt32(gcRow["Quantity"]),
-                            ProductName = productRow["ProductName"].ToString(),
-                            Price = Convert.ToDecimal(productRow["Price"]),
-                            Image = productRow["Image"].ToString()
-                        });
-                    }
-                    else
-                    {
-                        guestCartItems.Add(new
-                        {
-                            SessionID = gcRow["SessionID"].ToString(),
-                            ProductID = productId,
-                            Quantity = Convert.ToInt32(gcRow["Quantity"]),
-                            ProductName = "Product Not Found",
-                            Price = 0m,
-                            Image = ""
-                        });
-                    }
+                    return Convert.ToInt32(result.Rows[0]["TotalCount"]);
                 }
+
+                return 0;
             }
-            catch (Exception ex)
+            catch
             {
-                ViewBag.Error = ex.Message;
+                return 0;
             }
-
-            ViewBag.SessionId = sessionId;
-            ViewBag.GuestCartItems = guestCartItems;
-            return View();
         }
 
-        public IActionResult TestDirectQuery()
+        private int GetGuestCartCount()
         {
-            var sessionId = GetOrCreateSessionId();
+            try
+            {
+                var sessionId = GetOrCreateSessionId();
+                if (string.IsNullOrEmpty(sessionId)) return 0;
 
-            // Get GuestCart data first
-            var guestCartQuery = $"SELECT * FROM GuestCart WHERE SessionID = '{sessionId}'";
-            var guestCartData = _db.SelectQuery(guestCartQuery);
+                var query = $@"SELECT SUM(Quantity) as TotalCount 
+                      FROM GuestCart 
+                      WHERE SessionID = '{sessionId}'";
 
-            ViewBag.GuestCartData = guestCartData;
-            ViewBag.SessionId = sessionId;
+                var result = _db.SelectQuery(query);
 
-            return View();
+                if (result.Rows.Count > 0 && result.Rows[0]["TotalCount"] != DBNull.Value)
+                {
+                    return Convert.ToInt32(result.Rows[0]["TotalCount"]);
+                }
+
+                return 0;
+            }
+            catch
+            {
+                return 0;
+            }
         }
+
     }
+
 }

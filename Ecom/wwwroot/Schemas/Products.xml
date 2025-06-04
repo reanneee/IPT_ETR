@@ -1,29 +1,64 @@
-﻿<Products>
-	<Product>
-		<ProductName>Coffee Mug</ProductName>
-		<Description>White ceramic coffee mug</Description>
-		<Price>12.99</Price>
-		<Stock>50</Stock>
-		<CategoryID>1</CategoryID>
-		<Image>/images/products/mug.jpg</Image>
-		<Visible>true</Visible>
-	</Product>
-	<Product>
-		<ProductName>Wireless Mouse</ProductName>
-		<Description>Ergonomic USB wireless mouse</Description>
-		<Price>25.50</Price>
-		<Stock>30</Stock>
-		<CategoryID></CategoryID>
-		<Image>/images/products/mouse.jpg</Image>
-		<Visible>true</Visible>
-	</Product>
-	<Product>
-		<ProductName>Notebook</ProductName>
-		<Description>100 pages spiral notebook</Description>
-		<Price>5.75</Price>
-		<Stock>120</Stock>
-		<CategoryID>2</CategoryID>
-		<Image>/images/products/notebook.jpg</Image>
-		<Visible>false</Visible>
-	</Product>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Products SYSTEM "Products.dtd">
+<Products>
+  <Product>
+    <ProductID>1</ProductID>
+    <ProductName>Smartphone</ProductName>
+    <Description>Latest smartphone with advanced features</Description>
+    <Price>699.99</Price>
+    <Stock>49</Stock>
+    <CategoryID>8</CategoryID>
+    <CategoryName>Home &amp;amp; Garden</CategoryName>
+    <Image>/uploads/products/93edc3ce-70fa-4bfd-a667-2b76e534b86c.jpg</Image>
+    <Visible>false</Visible>
+    <CreatedAt>2025-06-03T14:03:54</CreatedAt>
+  </Product>
+  <Product>
+    <ProductID>2</ProductID>
+    <ProductName>Laptop</ProductName>
+    <Description>High-performance laptop for work and gaming</Description>
+    <Price>1299.99</Price>
+    <Stock>0</Stock>
+    <CategoryID>8</CategoryID>
+    <CategoryName>Home &amp;amp; Garden</CategoryName>
+    <Image>/uploads/products/8bfbff4f-9216-45b4-9aec-bde2d09b0802.jpg</Image>
+    <Visible>true</Visible>
+    <CreatedAt>2025-06-03T14:03:54</CreatedAt>
+  </Product>
+  <Product>
+    <ProductID>3</ProductID>
+    <ProductName>T-Shirt</ProductName>
+    <Description>Comfortable cotton t-shirt</Description>
+    <Price>19.99</Price>
+    <Stock>99</Stock>
+    <CategoryID>8</CategoryID>
+    <CategoryName>Home &amp;amp; Garden</CategoryName>
+    <Image>/uploads/products/c013c61f-6f75-40ed-8e52-12202c8ec37c.jpg</Image>
+    <Visible>true</Visible>
+    <CreatedAt>2025-06-03T14:03:54</CreatedAt>
+  </Product>
+  <Product>
+    <ProductID>4</ProductID>
+    <ProductName>Jeans</ProductName>
+    <Description>Classic denim jeans</Description>
+    <Price>49.99</Price>
+    <Stock>67</Stock>
+    <CategoryID>8</CategoryID>
+    <CategoryName>Home &amp;amp; Garden</CategoryName>
+    <Image>/uploads/products/4c1c336a-a9ed-464e-aee0-9d33c43883b4.jpg</Image>
+    <Visible>true</Visible>
+    <CreatedAt>2025-06-03T14:03:54</CreatedAt>
+  </Product>
+  <Product>
+    <ProductID>5</ProductID>
+    <ProductName>Programming Book</ProductName>
+    <Description>Learn programming fundamentals</Description>
+    <Price>39.99</Price>
+    <Stock>30</Stock>
+    <CategoryID>8</CategoryID>
+    <CategoryName>Home &amp;amp; Garden</CategoryName>
+    <Image>/uploads/products/1d7d4769-985d-4cf2-a4f1-06bc7ce3787e.jpg</Image>
+    <Visible>true</Visible>
+    <CreatedAt>2025-06-03T14:03:54</CreatedAt>
+  </Product>
 </Products>

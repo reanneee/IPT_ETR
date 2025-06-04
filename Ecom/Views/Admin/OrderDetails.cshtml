@@ -1,0 +1,204 @@
+﻿@model Ecom.Models.Order
+
+@{
+    ViewData["Title"] = $"Order Details - #{Model.OrderID}";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Order Details - #@Model.OrderID</h2>
+                <div>
+                    <a href="@Url.Action("Orders", "Admin")" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Orders
+                    </a>
+                    <button type="button" class="btn btn-primary" onclick="window.print()">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                </div>
+            </div>
+
+            <!-- Order Information Card -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Order Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td><strong>Order ID:</strong></td>
+                                    <td>#@Model.OrderID</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Order Date:</strong></td>
+                                    <td>@Model.OrderDate.ToString("MMM dd, yyyy hh:mm tt")</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Status:</strong></td>
+                                    <td>
+                                        <span class="badge badge-@(Model.Status == "Delivered" ? "success" : Model.Status == "Processing" ? "warning" : Model.Status == "Shipped" ? "info" : "secondary")">
+                                            @Model.Status
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Amount:</strong></td>
+                                    <td><strong>₱@Model.TotalAmount.ToString("N2")</strong></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Customer Information</h6>
+                            <p class="mb-1"><strong>Name:</strong> @Model.CustomerName</p>
+                            <p class="mb-1"><strong>Email:</strong> @Model.CustomerEmail</p>
+                            <p class="mb-1"><strong>User Address:</strong> @Model.UserAddress</p>
+                            <hr>
+                            <h6>Shipping Address</h6>
+                            <p class="mb-0">@Model.ShippingAddress</p>
+                        </div>
+                    </div>
+
+                    <!-- Update Status Form -->
+                    <div class="row mt-3">
+                        <div class="col-md-8">
+                            <form method="post" action="@Url.Action("UpdateOrderStatus", "Admin")" class="d-inline">
+                                <div class="form-group">
+                                    <label for="status">Update Status:</label>
+                                    <div class="input-group">
+                                        <select name="status" id="status" class="form-control">
+                                            <option value="Pending" selected="@(Model.Status == "Pending")">Pending</option>
+                                            <option value="Processing" selected="@(Model.Status == "Processing")">Processing</option>
+                                            <option value="Shipped" selected="@(Model.Status == "Shipped")">Shipped</option>
+                                            <option value="Delivered" selected="@(Model.Status == "Delivered")">Delivered</option>
+                                            <option value="Cancelled" selected="@(Model.Status == "Cancelled")">Cancelled</option>
+                                        </select>
+                                        <div class="input-group-append">
+                                            <input type="hidden" name="orderId" value="@Model.OrderID" />
+                                            <button type="submit" class="btn btn-primary">Update Status</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            @if (Model.Status != "Cancelled" && Model.Status != "Delivered")
+                            {
+                                <div class="mt-2">
+                                    <a href="@Url.Action("ConfirmCancelOrder", "Admin", new { id = Model.OrderID })"
+                                       class="btn btn-outline-danger">
+                                        <i class="fas fa-times"></i> Cancel Order (with Stock Restore)
+                                    </a>
+                                </div>
+                            }
+
+                            @if (Model.Status == "Cancelled")
+                            {
+                                <div class="alert alert-info mt-2">
+                                    <i class="fas fa-info-circle"></i>
+                                    <strong>Order Cancelled:</strong> Product stock has been restored to inventory.
+                                    You can reactivate this order by changing its status above (stock availability will be checked).
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Items Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Order Items</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.OrderItems.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Description</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.OrderItems)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    @if (!string.IsNullOrEmpty(item.ProductImage))
+                                                    {
+                                                        <img src="@item.ProductImage" alt="@item.ProductName"
+                                                             class="img-thumbnail me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                                    }
+                                                    <div>
+                                                        <strong>@item.ProductName</strong>
+                                                        <br>
+                                                        <small class="text-muted">ID: @item.ProductID</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <small>
+                                                    @(string.IsNullOrEmpty(item.ProductDescription) ? "N/A" :
+                                                         (item.ProductDescription.Length > 100 ?
+                                                          item.ProductDescription.Substring(0, 100) + "..." :
+                                                          item.ProductDescription))
+                                                </small>
+                                            </td>
+                                            <td>₱@item.PriceAtPurchase.ToString("N2")</td>
+                                            <td>@item.Quantity</td>
+                                            <td><strong>₱@item.Total.ToString("N2")</strong></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr class="table-info">
+                                        <th colspan="4" class="text-right">Grand Total:</th>
+                                        <th>₱@Model.TotalAmount.ToString("N2")</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            No items found for this order.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Print Styles -->
+<style>
+    @@media print {
+        .btn, .form-group, .no-print {
+            display: none !important;
+        }
+
+        .card {
+            border: 1px solid #000 !important;
+            box-shadow: none !important;
+        }
+
+        .table {
+            font-size: 12px;
+        }
+
+        .badge {
+            border: 1px solid #000;
+            color: #000 !important;
+            background-color: transparent !important;
+        }
+    }
+</style>

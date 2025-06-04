@@ -156,3 +156,6 @@ C:\Users\Gloreanne\source\repos\Ecom 04-06-12pm\Ecom\Ecom\obj\Debug\net5.0\Ecom.
 C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\_ViewStart.cshtml.g.cs
 C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Shared\_AdminLayout.cshtml.g.cs
 C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\UploadXML.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\ImportExport\Index.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\OrderDetails.cshtml.g.cs
+C:\Users\Gloreanne\source\repos\Ecom\Ecom\obj\Debug\net5.0\Razor\Views\Admin\ConfirmCancelOrder.cshtml.g.cs

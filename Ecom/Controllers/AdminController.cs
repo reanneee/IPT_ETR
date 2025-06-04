@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Ecom.DataAccess;
 using Ecom.Models;
 using System.Data;
@@ -11,8 +12,6 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Xml;
-using System.Xml.Schema;
 
 namespace Ecom.Controllers
 {
@@ -48,246 +47,6 @@ namespace Ecom.Controllers
             return View();
         }
 
-        // XML Upload Feature
-        [HttpGet]
-        public IActionResult UploadXML()
-        {
-            if (!IsAdmin()) return RedirectToAction("Login", "Account");
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> UploadXML(IFormFile file, bool importData = false)
-        {
-            if (!IsAdmin()) return RedirectToAction("Login", "Account");
-
-            if (file == null || file.Length == 0)
-            {
-                ViewBag.Message = "Please select a file to upload.";
-                ViewBag.MessageType = "error";
-                return View();
-            }
-
-            if (Path.GetExtension(file.FileName).ToLower() != ".xml")
-            {
-                ViewBag.Message = "Invalid file type. Please select a valid XML file.";
-                ViewBag.MessageType = "error";
-                return View();
-            }
-
-            try
-            {
-                string schemaPath = Path.Combine(_webHostEnvironment.WebRootPath, "Schemas", "Products.xsd");
-
-                // Check if schema file exists
-                if (!System.IO.File.Exists(schemaPath))
-                {
-                    ViewBag.Message = "Schema file not found. Please ensure Products.xsd exists in wwwroot/Schemas folder.";
-                    ViewBag.MessageType = "error";
-                    return View();
-                }
-
-                bool isValid = ValidateXml(file, schemaPath, out string validationMessage);
-
-                if (isValid)
-                {
-                    if (importData)
-                    {
-                        // Parse and import the XML data
-                        var importResult = await ImportProductsFromXml(file);
-                        ViewBag.Message = $"XML file is valid and data imported successfully! {importResult.ImportedCount} products imported, {importResult.SkippedCount} skipped.";
-                        ViewBag.MessageType = "success";
-                        ViewBag.ImportDetails = importResult.Details;
-                    }
-                    else
-                    {
-                        ViewBag.Message = "XML file is valid and ready for import.";
-                        ViewBag.MessageType = "success";
-                        ViewBag.ShowImportButton = true;
-                    }
-                }
-                else
-                {
-                    ViewBag.Message = $"XML file is invalid. Error: {validationMessage}";
-                    ViewBag.MessageType = "error";
-                }
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = $"An error occurred while processing the file: {ex.Message}";
-                ViewBag.MessageType = "error";
-            }
-
-            return View();
-        }
-
-        private bool ValidateXml(IFormFile file, string xsdPath, out string validationMessage)
-        {
-            validationMessage = string.Empty;
-            bool isValid = true;
-            List<string> errors = new List<string>();
-
-            try
-            {
-                XmlSchemaSet schemaSet = new XmlSchemaSet();
-                schemaSet.Add("", xsdPath);
-
-                using (var stream = file.OpenReadStream())
-                {
-                    XmlReaderSettings settings = new XmlReaderSettings
-                    {
-                        Schemas = schemaSet,
-                        ValidationType = ValidationType.Schema
-                    };
-
-                    settings.ValidationEventHandler += (sender, args) =>
-                    {
-                        isValid = false;
-                        errors.Add($"Line {args.Exception?.LineNumber}: {args.Message}");
-                    };
-
-                    using (XmlReader reader = XmlReader.Create(stream, settings))
-                    {
-                        while (reader.Read()) { }
-                    }
-                }
-
-                if (errors.Any())
-                {
-                    validationMessage = string.Join("; ", errors);
-                }
-            }
-            catch (Exception ex)
-            {
-                isValid = false;
-                validationMessage = ex.Message;
-            }
-
-            return isValid;
-        }
-
-        private async Task<ImportResult> ImportProductsFromXml(IFormFile file)
-        {
-            var result = new ImportResult();
-
-            try
-            {
-                using (var stream = file.OpenReadStream())
-                {
-                    XmlDocument doc = new XmlDocument();
-                    doc.Load(stream);
-
-                    XmlNodeList productNodes = doc.SelectNodes("//Product");
-
-                    foreach (XmlNode productNode in productNodes)
-                    {
-                        try
-                        {
-                            var product = ParseProductFromXml(productNode);
-
-                            // Check if product already exists
-                            if (ProductExists(product.ProductName))
-                            {
-                                result.SkippedCount++;
-                                result.Details.Add($"Skipped: {product.ProductName} (already exists)");
-                                continue;
-                            }
-
-                            // Validate category exists
-                            if (product.CategoryID.HasValue && !CategoryExists(product.CategoryID.Value))
-                            {
-                                result.SkippedCount++;
-                                result.Details.Add($"Skipped: {product.ProductName} (invalid category ID: {product.CategoryID})");
-                                continue;
-                            }
-
-                            // Insert product
-                            if (InsertProduct(product))
-                            {
-                                result.ImportedCount++;
-                                result.Details.Add($"Imported: {product.ProductName}");
-                            }
-                            else
-                            {
-                                result.SkippedCount++;
-                                result.Details.Add($"Failed to import: {product.ProductName}");
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            result.SkippedCount++;
-                            result.Details.Add($"Error processing product: {ex.Message}");
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                result.Details.Add($"Error reading XML file: {ex.Message}");
-            }
-
-            return result;
-        }
-
-        private Product ParseProductFromXml(XmlNode productNode)
-        {
-            return new Product
-            {
-                ProductName = GetXmlNodeValue(productNode, "ProductName"),
-                Description = GetXmlNodeValue(productNode, "Description"),
-                Price = decimal.Parse(GetXmlNodeValue(productNode, "Price")),
-                Stock = int.Parse(GetXmlNodeValue(productNode, "Stock")),
-                CategoryID = string.IsNullOrEmpty(GetXmlNodeValue(productNode, "CategoryID")) ?
-                            (int?)null : int.Parse(GetXmlNodeValue(productNode, "CategoryID")),
-                Image = GetXmlNodeValue(productNode, "Image"),
-                Visible = bool.Parse(GetXmlNodeValue(productNode, "Visible")),
-                CreatedAt = DateTime.Now
-            };
-        }
-
-        private string GetXmlNodeValue(XmlNode parentNode, string nodeName)
-        {
-            return parentNode.SelectSingleNode(nodeName)?.InnerText ?? string.Empty;
-        }
-
-        private bool ProductExists(string productName)
-        {
-            var query = $"SELECT COUNT(*) as Count FROM Products WHERE ProductName = '{productName.Replace("'", "''")}'";
-            var result = _db.SelectQuery(query);
-            return Convert.ToInt32(result.Rows[0]["Count"]) > 0;
-        }
-
-        private bool CategoryExists(int categoryId)
-        {
-            var query = $"SELECT COUNT(*) as Count FROM Categories WHERE CategoryID = {categoryId}";
-            var result = _db.SelectQuery(query);
-            return Convert.ToInt32(result.Rows[0]["Count"]) > 0;
-        }
-
-        private bool InsertProduct(Product product)
-        {
-            try
-            {
-                var categoryValue = product.CategoryID?.ToString() ?? "NULL";
-                var query = $@"INSERT INTO Products (ProductName, Description, Price, Stock, CategoryID, Image, Visible, CreatedAt) 
-                              VALUES ('{product.ProductName.Replace("'", "''")}', 
-                                     '{product.Description.Replace("'", "''")}', 
-                                     {product.Price}, 
-                                     {product.Stock}, 
-                                     {categoryValue}, 
-                                     '{product.Image.Replace("'", "''")}', 
-                                     {(product.Visible ? 1 : 0)}, 
-                                     '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
-
-                var result = _db.ExecuteQuery(query);
-                return result > 0;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
         // User Management
         public IActionResult Users()
         {
@@ -304,6 +63,7 @@ namespace Ecom.Controllers
             var users = GetAllUsers().Where(u => u.Role == "Customer").ToList();
             return View(users);
         }
+
 
         [HttpGet]
         public IActionResult CreateUser()
@@ -674,16 +434,174 @@ namespace Ecom.Controllers
             return View(orders);
         }
 
+        // Replace the existing UpdateOrderStatus method in AdminController with this improved version
         [HttpPost]
         public IActionResult UpdateOrderStatus(int orderId, string status)
         {
             if (!IsAdmin()) return RedirectToAction("Login", "Account");
 
-            var query = $"UPDATE Orders SET Status = '{status}' WHERE OrderID = {orderId}";
-            _db.ExecuteQuery(query);
+            try
+            {
+                // Get the current order status before updating
+                var currentOrderQuery = $"SELECT Status FROM Orders WHERE OrderID = {orderId}";
+                var currentResult = _db.SelectQuery(currentOrderQuery);
 
-            TempData["Success"] = "Order status updated successfully!";
-            return RedirectToAction("Orders");
+                if (currentResult.Rows.Count == 0)
+                {
+                    TempData["Error"] = "Order not found.";
+                    return RedirectToAction("Orders");
+                }
+
+                string currentStatus = currentResult.Rows[0]["Status"].ToString();
+
+                // Handle stock restoration when cancelling an order
+                if (status == "Cancelled" && currentStatus != "Cancelled")
+                {
+                    RestoreOrderStock(orderId);
+                    TempData["Success"] = "Order cancelled successfully! Product stock has been restored.";
+                }
+                // Handle stock reduction when un-cancelling an order (changing from Cancelled to another status)
+                else if (currentStatus == "Cancelled" && status != "Cancelled")
+                {
+                    if (!ReduceOrderStock(orderId))
+                    {
+                        TempData["Error"] = "Cannot change order status: Insufficient stock for some products.";
+                        return RedirectToAction("Orders");
+                    }
+                    TempData["Success"] = "Order status updated successfully! Product stock has been adjusted.";
+                }
+                else
+                {
+                    TempData["Success"] = "Order status updated successfully!";
+                }
+
+                // Prepare the update query with date handling
+                string updateQuery;
+
+                if (status == "Shipped")
+                {
+                    // Set ShippedDate to current datetime when status is changed to Shipped
+                    updateQuery = $"UPDATE Orders SET Status = '{status}', ShippedDate = NOW() WHERE OrderID = {orderId}";
+                }
+                else if (status == "Delivered")
+                {
+                    // Set DeliveredDate to current datetime when status is changed to Delivered
+                    // Also ensure ShippedDate is set if it wasn't already
+                    updateQuery = $@"UPDATE Orders 
+                            SET Status = '{status}', 
+                                DeliveredDate = NOW(),
+                                ShippedDate = COALESCE(ShippedDate, NOW())
+                            WHERE OrderID = {orderId}";
+                }
+                else
+                {
+                    // For other status changes, just update the status
+                    updateQuery = $"UPDATE Orders SET Status = '{status}' WHERE OrderID = {orderId}";
+                }
+
+                // Execute the update query
+                _db.ExecuteQuery(updateQuery);
+
+                return RedirectToAction("OrderDetails", new { id = orderId });
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error updating order status: {ex.Message}";
+                return RedirectToAction("Orders");
+            }
+        }
+
+        // Add this new method to handle stock restoration when cancelling orders
+        private void RestoreOrderStock(int orderId)
+        {
+            var query = $@"SELECT ProductID, Quantity 
+                  FROM OrderItems 
+                  WHERE OrderID = {orderId}";
+
+            var orderItems = _db.SelectQuery(query);
+
+            foreach (DataRow item in orderItems.Rows)
+            {
+                int productId = Convert.ToInt32(item["ProductID"]);
+                int quantity = Convert.ToInt32(item["Quantity"]);
+
+                // Add the quantity back to the product stock
+                var restoreStockQuery = $@"UPDATE Products 
+                                  SET Stock = Stock + {quantity} 
+                                  WHERE ProductID = {productId}";
+                _db.ExecuteQuery(restoreStockQuery);
+
+                // Optional: Log the stock restoration for audit purposes
+             //   LogStockMovement(productId, quantity, "RESTORED", $"Order #{orderId} cancelled");
+            }
+        }
+
+        // Add this new method to handle stock reduction when reactivating cancelled orders
+        private bool ReduceOrderStock(int orderId)
+        {
+            var query = $@"SELECT oi.ProductID, oi.Quantity, p.Stock 
+                  FROM OrderItems oi
+                  JOIN Products p ON oi.ProductID = p.ProductID
+                  WHERE oi.OrderID = {orderId}";
+
+            var orderItems = _db.SelectQuery(query);
+
+            // First, check if we have enough stock for all items
+            foreach (DataRow item in orderItems.Rows)
+            {
+                int currentStock = Convert.ToInt32(item["Stock"]);
+                int requiredQuantity = Convert.ToInt32(item["Quantity"]);
+
+                if (currentStock < requiredQuantity)
+                {
+                    return false; // Not enough stock
+                }
+            }
+
+            // If we reach here, we have enough stock for all items, so reduce them
+            foreach (DataRow item in orderItems.Rows)
+            {
+                int productId = Convert.ToInt32(item["ProductID"]);
+                int quantity = Convert.ToInt32(item["Quantity"]);
+
+                var reduceStockQuery = $@"UPDATE Products 
+                                 SET Stock = Stock - {quantity} 
+                                 WHERE ProductID = {productId}";
+                _db.ExecuteQuery(reduceStockQuery);
+
+                // Optional: Log the stock reduction for audit purposes
+          //      LogStockMovement(productId, -quantity, "REDUCED", $"Order #{orderId} reactivated");
+            }
+
+            return true;
+        }
+
+       
+        [HttpGet]
+        public IActionResult ConfirmCancelOrder(int id)
+        {
+            if (!IsAdmin()) return RedirectToAction("Login", "Account");
+
+            var order = GetOrderDetailsForAdmin(id);
+            if (order == null)
+            {
+                TempData["Error"] = "Order not found.";
+                return RedirectToAction("Orders");
+            }
+
+            if (order.Status == "Cancelled")
+            {
+                TempData["Warning"] = "This order is already cancelled.";
+                return RedirectToAction("OrderDetails", new { id });
+            }
+
+            if (order.Status == "Delivered")
+            {
+                TempData["Error"] = "Cannot cancel a delivered order.";
+                return RedirectToAction("OrderDetails", new { id });
+            }
+
+            return View(order);
         }
 
         // Category Management
@@ -921,13 +839,78 @@ namespace Ecom.Controllers
 
             return categories;
         }
+
+
+        // Add this method to your AdminController class
+
+        [HttpGet]
+        public IActionResult OrderDetails(int id)
+        {
+            if (!IsAdmin()) return RedirectToAction("Login", "Account");
+
+            var order = GetOrderDetailsForAdmin(id);
+            if (order == null)
+            {
+                TempData["Error"] = "Order not found.";
+                return RedirectToAction("Orders");
+            }
+
+            return View(order);
+        }
+
+        // Add this helper method to your AdminController class
+        private Order GetOrderDetailsForAdmin(int orderId)
+        {
+            // Get order with user information
+            var orderQuery = $@"SELECT o.*, u.Firstname, u.Lastname, u.Email, u.Address as UserAddress 
+                       FROM Orders o
+                       JOIN Users u ON o.UserID = u.UserID
+                       WHERE o.OrderID = {orderId}";
+
+            var orderResult = _db.SelectQuery(orderQuery);
+            if (orderResult.Rows.Count == 0) return null;
+
+            var orderRow = orderResult.Rows[0];
+            var order = new Order
+            {
+                OrderID = Convert.ToInt32(orderRow["OrderID"]),
+                UserID = Convert.ToInt32(orderRow["UserID"]),
+                OrderDate = Convert.ToDateTime(orderRow["OrderDate"]),
+                Status = orderRow["Status"].ToString(),
+                TotalAmount = Convert.ToDecimal(orderRow["TotalAmount"]),
+                ShippingAddress = orderRow["ShippingAddress"].ToString(),
+                // Add user information to the order object (you might need to add these properties to your Order model)
+                CustomerName = $"{orderRow["Firstname"]} {orderRow["Lastname"]}",
+                CustomerEmail = orderRow["Email"].ToString(),
+                UserAddress = orderRow["UserAddress"].ToString()
+            };
+
+            // Get order items with product details
+            var itemsQuery = $@"SELECT oi.*, p.ProductName, p.Description, p.Image 
+                       FROM OrderItems oi
+                       JOIN Products p ON oi.ProductID = p.ProductID
+                       WHERE oi.OrderID = {orderId}";
+
+            var itemsResult = _db.SelectQuery(itemsQuery);
+            order.OrderItems = new List<OrderItem>();
+
+            foreach (DataRow itemRow in itemsResult.Rows)
+            {
+                order.OrderItems.Add(new OrderItem
+                {
+                    OrderItemID = Convert.ToInt32(itemRow["OrderItemID"]),
+                    OrderID = Convert.ToInt32(itemRow["OrderID"]),
+                    ProductID = Convert.ToInt32(itemRow["ProductID"]),
+                    Quantity = Convert.ToInt32(itemRow["Quantity"]),
+                    PriceAtPurchase = Convert.ToDecimal(itemRow["PriceAtPurchase"]),
+                    ProductName = itemRow["ProductName"].ToString(),
+                    ProductDescription = itemRow["Description"].ToString(),
+                    ProductImage = itemRow["Image"].ToString()
+                });
+            }
+
+            return order;
+        }
     }
 
-    // Helper class for import results
-    public class ImportResult
-    {
-        public int ImportedCount { get; set; } = 0;
-        public int SkippedCount { get; set; } = 0;
-        public List<string> Details { get; set; } = new List<string>();
-    }
 }

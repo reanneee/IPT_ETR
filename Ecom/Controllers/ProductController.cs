@@ -28,6 +28,26 @@ namespace Ecom.Controllers
             return View(products);
         }
 
+        // New AJAX search method
+        [HttpGet]
+        public IActionResult LiveSearch(string keyword, int? categoryId)
+        {
+            var products = GetProducts(categoryId, keyword);
+
+            var result = products.Select(p => new
+            {
+                productID = p.ProductID,
+                productName = p.ProductName,
+                description = p.Description,
+                price = p.Price.ToString("F2"),
+                stock = p.Stock,
+                categoryName = p.CategoryName,
+                image = p.Image
+            }).ToList();
+
+            return Json(result);
+        }
+
         public IActionResult Details(int id)
         {
             var product = GetProductById(id);
@@ -127,4 +147,3 @@ namespace Ecom.Controllers
         }
     }
 }
-
