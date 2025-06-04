@@ -61,4 +61,161 @@
     <Visible>true</Visible>
     <CreatedAt>2025-06-03T14:03:54</CreatedAt>
   </Product>
+	<Product>
+		<ProductID>6</ProductID>
+		<ProductName>Jade Terrarium</ProductName>
+		<Description>Compact jade plant in a glass terrarium</Description>
+		<Price>14.99</Price>
+		<Stock>35</Stock>
+		<CategoryID>8</CategoryID>
+		<CategoryName>Home &amp; Garden</CategoryName>
+		<Image>/images/products/jade-terrarium.jpg</Image>
+		<Visible>true</Visible>
+		<CreatedAt>2025-06-04T00:00:00</CreatedAt>
+	</Product>
+	<Product>
+		<ProductID>7</ProductID>
+		<ProductName>Ficus Benjamina</ProductName>
+		<Description>Elegant indoor weeping fig</Description>
+		<Price>18.99</Price>
+		<Stock>42</Stock>
+		<CategoryID>8</CategoryID>
+		<CategoryName>Home &amp; Garden</CategoryName>
+		<Image>/images/products/ficus-benjamina.jpg</Image>
+		<Visible>true</Visible>
+		<CreatedAt>2025-06-04T00:00:00</CreatedAt>
+	</Product>
+	<Product>
+		<ProductID>8</ProductID>
+		<ProductName>Syngonium Plant</ProductName>
+		<Description>Arrowhead vine with lush foliage</Description>
+		<Price>12.49</Price>
+		<Stock>28</Stock>
+		<CategoryID>8</CategoryID>
+		<CategoryName>Home &amp; Garden</CategoryName>
+		<Image>/images/products/syngonium.jpg</Image>
+		<Visible>true</Visible>
+		<CreatedAt>2025-06-04T00:00:00</CreatedAt>
+	</Product>
+	<Product>
+		<ProductID>9</ProductID>
+		<ProductName>Cactus Peruvianus</ProductName>
+		<Description>Tall columnar cactus, minimal care</Description>
+		<Price>15.99</Price>
+		<Stock>37</Stock>
+		<CategoryID>8</CategoryID>
+		<CategoryName>Home &amp; Garden</CategoryName>
+		<Image>/images/products/cactus-peruvianus.jpg</Image>
+		<Visible>true</Visible>
+		<CreatedAt>2025-06-04T00:00:00</CreatedAt>
+	</Product>
+	<Product>
+		<ProductID>10</ProductID>
+		<ProductName>Chlorophytum Lemon</ProductName>
+		<Description>Lime-striped spider plant</Description>
+		<Price>10.99</Price>
+		<Stock>48</Stock>
+		<CategoryID>8</CategoryID>
+		<CategoryName>Home &amp; Garden</CategoryName>
+		<Image>/images/products/chlorophytum-lemon.jpg</Image>
+		<Visible>true</Visible>
+		<CreatedAt>2025-06-04T00:00:00</CreatedAt>
+	</Product>
+	<Product>
+		<ProductID>11</ProductID>
+		<ProductName>Aloe Rauhii</ProductName>
+		<Description>Compact aloe with speckled leaves</Description>
+		<Price>13.49</Price>
+		<Stock>30</Stock>
+		<CategoryID>8</CategoryID>
+		<CategoryName>Home &amp; Garden</CategoryName>
+		<Image>/images/products/aloe-rauhii.jpg</Image>
+		<Visible>true</Visible>
+		<CreatedAt>2025-06-04T00:00:00</CreatedAt>
+	</Product>
+	<Product>
+		<ProductID>12</ProductID>
+		<ProductName>Areca Palm</ProductName>
+		<Description>Graceful feathery palm</Description>
+		<Price>19.99</Price>
+		<Stock>40</Stock>
+		<CategoryID>8</CategoryID>
+		<CategoryName>Home &amp; Garden</CategoryName>
+		<Image>/images/products/areca-palm.jpg</Image>
+		<Visible>true</Visible>
+		<CreatedAt>2025-06-04T00:00:00</CreatedAt>
+	</Product>
+	<Product>
+		<ProductID>13</ProductID>
+		<ProductName>Sansevieria Black</ProductName>
+		<Description>Dark-leafed snake plant</Description>
+		<Price>16.49</Price>
+		<Stock>33</Stock>
+		<CategoryID>8</CategoryID>
+		<CategoryName>Home &amp; Garden</CategoryName>
+		<Image>/images/products/sansevieria-black.jpg</Image>
+		<Visible>true</Visible>
+		<CreatedAt>2025-06-04T00:00:00</CreatedAt>
+	</Product>
+	<Product>
+		<ProductID>14</ProductID>
+		<ProductName>Adenium Plant</ProductName>
+		<Description>Desert rose with thick base</Description>
+		<Price>17.99</Price>
+		<Stock>27</Stock>
+		<CategoryID>8</CategoryID>
+		<CategoryName>Home &amp; Garden</CategoryName>
+		<Image>/images/products/adenium.jpg</Image>
+		<Visible>true</Visible>
+		<CreatedAt>2025-06-04T00:00:00</CreatedAt>
+	</Product>
+	<Product>
+		<ProductID>15</ProductID>
+		<ProductName>Ficus Twilight</ProductName>
+		<Description>Variegated ficus with pale edges</Description>
+		<Price>18.49</Price>
+		<Stock>45</Stock>
+		<CategoryID>8</CategoryID>
+		<CategoryName>Home &amp; Garden</CategoryName>
+		<Image>/images/products/ficus-twilight.jpg</Image>
+		<Visible>true</Visible>
+		<CreatedAt>2025-06-04T00:00:00</CreatedAt>
+	</Product>
+	<Product>
+		<ProductID>16</ProductID>
+		<ProductName>Rhoeo Plant</ProductName>
+		<Description>Colorful rosette-shaped foliage</Description>
+		<Price>11.99</Price>
+		<Stock>38</Stock>
+		<CategoryID>8</CategoryID>
+		<CategoryName>Home &amp; Garden</CategoryName>
+		<Image>/images/products/rhoeo.jpg</Image>
+		<Visible>true</Visible>
+		<CreatedAt>2025-06-04T00:00:00</CreatedAt>
+	</Product>
+	<Product>
+		<ProductID>17</ProductID>
+		<ProductName>Ctenanthe Burle</ProductName>
+		<Description>Striped leaves with purple underside</Description>
+		<Price>14.49</Price>
+		<Stock>31</Stock>
+		<CategoryID>8</CategoryID>
+		<CategoryName>Home &amp; Garden</CategoryName>
+		<Image>/images/products/ctenanthe-burle.jpg</Image>
+		<Visible>true</Visible>
+		<CreatedAt>2025-06-04T00:00:00</CreatedAt>
+	</Product>
+	<Product>
+		<ProductID>18</ProductID>
+		<ProductName>Hoya Linearis</ProductName>
+		<Description>Trailing hoya with fuzzy narrow leaves</Description>
+		<Price>15.99</Price>
+		<Stock>29</Stock>
+		<CategoryID>8</CategoryID>
+		<CategoryName>Home &amp; Garden</CategoryName>
+		<Image>/images/products/hoya-linearis.jpg</Image>
+		<Visible>true</Visible>
+		<CreatedAt>2025-06-04T00:00:00</CreatedAt>
+	</Product>
+
 </Products>

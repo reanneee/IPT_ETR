@@ -2,38 +2,45 @@
 @{
     ViewData["Title"] = "Login";
 }
+<div class="d-flex justify-content-center align-items-center min-vh-100" style="background-color:white;">
+    <div style="width: 360px;" class="d-flex flex-column gap-4 bg-white p-4 rounded-4 shadow">
+        <!-- Header -->
+        <div class="text-center">
+            <h3 class="fw-semibold" style="font-size: 24px;">Log in to your account</h3>
+            <p class="text-muted" style="font-size: 16px;">Welcome back! Please enter your details.</p>
+        </div>
 
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="text-center">Login</h3>
+        <!-- Form -->
+        <form asp-action="Login" method="post" class="d-flex flex-column gap-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Email -->
+            <div class="d-flex flex-column gap-2">
+                <label asp-for="Email" class="fw-medium" style="font-size: 14px;">Email</label>
+                <input asp-for="Email" class="form-control border-0 px-3" style="height: 40px; background-color:white; border-radius: 12px; outline: 1px solid #363F54; color:black;" />
+                <span asp-validation-for="Email" class="text-danger small"></span>
             </div>
-            <div class="card-body">
-                <form asp-action="Login" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <div class="mb-3">
-                        <label asp-for="Email" class="form-label"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-
-                    <div class="mb-3">
-                        <label asp-for="Password" class="form-label"></label>
-                        <input asp-for="Password" class="form-control" type="password" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                </form>
-
-                <div class="text-center mt-3">
-                    <p>Don't have an account? <a asp-action="Register">Register here</a></p>
-                </div>
+            <!-- Password -->
+            <div class="d-flex flex-column gap-2">
+                <label asp-for="Password" class="fw-medium" style="font-size: 14px;">Password</label>
+                <input asp-for="Password" type="password" class="form-control border-0 px-3" style="height: 40px; background-color: white; border-radius: 12px; outline: 1px solid #363F54; color:black;" />
+                <span asp-validation-for="Password" class="text-danger small"></span>
             </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn w-100" style="height: 40px; background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%), #1A5CFF; border-radius: 8px; color: white; font-weight: 500; font-size: 14px;">
+                Sign in
+            </button>
+        </form>
+
+        <!-- Register link -->
+        <div class="text-center d-flex justify-content-center gap-1" style="font-size: 14px;">
+            <span class="text-muted">Don’t have an account?</span>
+            <a asp-action="Register" class="text-decoration-none fw-medium" style="color: #1A5CFF;">Sign up</a>
         </div>
     </div>
 </div>
+
+<!-- Bootstrap Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
