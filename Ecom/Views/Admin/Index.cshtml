@@ -1,132 +1,186 @@
 ﻿@{
     ViewData["Title"] = "Admin Dashboard";
+    var topProducts = ViewBag.TopSellingProducts as List<Ecom.Models.TopSellingProduct>;
 }
 
-<div class="container-fluid mt-4">
-    <h2>Admin Dashboard</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="h3 mb-4 text-gray-800">Admin Dashboard</h1>
+        </div>
+    </div>
 
+    <!-- Dashboard Stats Cards -->
     <div class="row mb-4">
-        <div class="col-md-3">
-            <div class="card text-white bg-primary">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title">Products</h5>
-                            <h2>@ViewBag.TotalProducts</h2>
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Products</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalProducts</div>
                         </div>
-                        <div>
-                            <i class="fas fa-box fa-2x"></i>
+                        <div class="col-auto">
+                            <i class="fas fa-box fa-2x text-gray-300"></i>
                         </div>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <a href="@Url.Action("Products")" class="text-white text-decoration-none">
-                        <small>View all products <i class="fas fa-arrow-right"></i></small>
-                    </a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-white bg-success">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title">Orders</h5>
-                            <h2>@ViewBag.TotalOrders</h2>
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Orders</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalOrders</div>
                         </div>
-                        <div>
-                            <i class="fas fa-shopping-cart fa-2x"></i>
+                        <div class="col-auto">
+                            <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
                         </div>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <a href="@Url.Action("Orders")" class="text-white text-decoration-none">
-                        <small>View all orders <i class="fas fa-arrow-right"></i></small>
-                    </a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-white bg-info">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title">Customers</h5>
-                            <h2>@ViewBag.TotalUsers</h2>
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Users</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalUsers</div>
                         </div>
-                        <div>
-                            <i class="fas fa-users fa-2x"></i>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
                         </div>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <a href="@Url.Action("Customers")" class="text-white text-decoration-none">
-                        <small>View all customers <i class="fas fa-arrow-right"></i></small>
-                    </a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-white bg-warning">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title">Revenue</h5>
-                            <h2>$@ViewBag.TotalRevenue</h2>
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Revenue</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">₱@ViewBag.TotalRevenue.ToString("N2")</div>
                         </div>
-                        <div>
-                            <i class="fas fa-dollar-sign fa-2x"></i>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                         </div>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <a href="@Url.Action("Orders")" class="text-white text-decoration-none">
-                        <small>View revenue details <i class="fas fa-arrow-right"></i></small>
-                    </a>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Top Selling Products Section -->
     <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Quick Actions</h5>
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Top 4 Selling Products</h6>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <a href="@Url.Action("CreateProduct")" class="btn btn-primary btn-lg w-100">
-                                <i class="fas fa-plus"></i> Add Product
-                            </a>
+                    @if (topProducts != null && topProducts.Any())
+                    {
+                        <div class="row">
+                            @foreach (var product in topProducts)
+                            {
+                                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-4">
+                                    <div class="card h-100 shadow-sm">
+                                   
+                                        <div class="position-relative">
+                                            @if (!string.IsNullOrEmpty(product.Image))
+                                            {
+                                                <img src="@product.Image"
+                                                     class="card-img-top"
+                                                     alt="@product.ProductName"
+                                                     style="height: 200px; object-fit: cover;">
+                                            }
+                                            else
+                                            {
+                                                <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                                                     style="height: 200px;">
+                                                    <i class="fas fa-image fa-3x text-muted"></i>
+                                                </div>
+                                            }
+                                            <div class="position-absolute top-0 end-0 m-2">
+                                                <span class="badge bg-success">@product.TotalSold sold</span>
+                                            </div>
+                                        </div>
+                                        <div class="card-body d-flex flex-column">
+                                            <h6 class="card-title font-weight-bold">@product.ProductName</h6>
+                                            <p class="card-text text-muted small mb-2">@product.CategoryName</p>
+                                            <p class="card-text text-truncate" style="max-height: 3em; overflow: hidden;">
+                                                @(string.IsNullOrEmpty(product.Description) ? "No description available" : product.Description)
+                                            </p>
+                                            <div class="mt-auto">
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <span class="h6 mb-0 text-primary">₱@product.Price.ToString("N2")</span>
+                                                    <small class="text-muted">Stock: @product.Stock</small>
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <small class="text-success font-weight-bold">
+                                                        Revenue: ₱@product.TotalRevenue.ToString("N2")
+                                                    </small>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <a href="/Admin/ProductDetails/@product.ProductID" class="btn btn-sm btn-outline-primary">
+                                                        View Details
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <a href="@Url.Action("Products")" class="btn btn-outline-primary btn-lg w-100">
-                                <i class="fas fa-list"></i> Manage Products
-                            </a>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">No sales data available yet.</p>
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <a href="@Url.Action("Orders")" class="btn btn-outline-success btn-lg w-100">
-                                <i class="fas fa-shopping-cart"></i> Manage Orders
-                            </a>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <a href="@Url.Action("Categories")" class="btn btn-outline-info btn-lg w-100">
-                                <i class="fas fa-tags"></i> Manage Categories
-                            </a>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <a href="@Url.Action("Users")" class="btn btn-outline-info btn-lg w-100">
-                                <i class="fas fa-tags"></i> Manage Users
-                            </a>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .card {
+        transition: transform 0.2s;
+    }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+    .border-left-primary {
+        border-left: 0.25rem solid #4e73df !important;
+    }
+
+    .border-left-success {
+        border-left: 0.25rem solid #1cc88a !important;
+    }
+
+    .border-left-info {
+        border-left: 0.25rem solid #36b9cc !important;
+    }
+
+    .border-left-warning {
+        border-left: 0.25rem solid #f6c23e !important;
+    }
+
+    .text-truncate {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+</style>

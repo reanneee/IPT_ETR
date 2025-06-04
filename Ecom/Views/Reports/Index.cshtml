@@ -1,0 +1,31 @@
+﻿<!-- Views/Reports/Index.cshtml -->
+@{
+    ViewData["Title"] = "Reports Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Reports Dashboard</h2>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sales Summary</h5>
+                    <p class="card-text">View comprehensive sales reports with date range filtering.</p>
+                    <a href="@Url.Action("SalesSummary", "Reports")" class="btn btn-primary">View Sales Summary</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Top Selling Products</h5>
+                    <p class="card-text">Analyze your best performing products by sales volume.</p>
+                    <a href="@Url.Action("TopSelling", "Reports")" class="btn btn-primary">View Top Selling</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

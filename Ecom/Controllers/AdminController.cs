@@ -43,8 +43,81 @@ namespace Ecom.Controllers
             ViewBag.TotalOrders = GetTotalOrders();
             ViewBag.TotalUsers = GetTotalUsers();
             ViewBag.TotalRevenue = GetTotalRevenue();
+            ViewBag.TopSellingProducts = GetTopSellingProducts();
 
             return View();
+        }
+
+        private int GetTotalProducts()
+        {
+            var query = "SELECT COUNT(*) as Count FROM Products WHERE Visible = TRUE";
+            var result = _db.SelectQuery(query);
+            return Convert.ToInt32(result.Rows[0]["Count"]);
+        }
+
+        private int GetTotalOrders()
+        {
+            var query = "SELECT COUNT(*) as Count FROM Orders";
+            var result = _db.SelectQuery(query);
+            return Convert.ToInt32(result.Rows[0]["Count"]);
+        }
+
+        private int GetTotalUsers()
+        {
+            var query = "SELECT COUNT(*) as Count FROM Users WHERE Role = 'Customer'";
+            var result = _db.SelectQuery(query);
+            return Convert.ToInt32(result.Rows[0]["Count"]);
+        }
+
+        private decimal GetTotalRevenue()
+        {
+            var query = "SELECT COALESCE(SUM(TotalAmount), 0) as Revenue FROM Orders WHERE Status = 'Delivered'";
+            var result = _db.SelectQuery(query);
+            return Convert.ToDecimal(result.Rows[0]["Revenue"]);
+        }
+
+        private List<TopSellingProduct> GetTopSellingProducts()
+        {
+            var query = @"
+                SELECT 
+                    p.ProductID,
+                    p.ProductName,
+                    p.Description,
+                    p.Price,
+                    p.Stock,
+                    p.Image,
+                    c.CategoryName,
+                    COALESCE(SUM(oi.Quantity), 0) as TotalSold,
+                    COALESCE(SUM(oi.Quantity * oi.PriceAtPurchase), 0) as TotalRevenue
+                FROM Products p
+                LEFT JOIN OrderItems oi ON p.ProductID = oi.ProductID
+                LEFT JOIN Orders o ON oi.OrderID = o.OrderID AND o.Status = 'Delivered'
+                LEFT JOIN Categories c ON p.CategoryID = c.CategoryID
+                WHERE p.Visible = TRUE
+                GROUP BY p.ProductID, p.ProductName, p.Description, p.Price, p.Stock, p.Image, c.CategoryName
+                ORDER BY TotalSold DESC
+                LIMIT 4";
+
+            var result = _db.SelectQuery(query);
+            var topProducts = new List<TopSellingProduct>();
+
+            foreach (DataRow row in result.Rows)
+            {
+                topProducts.Add(new TopSellingProduct
+                {
+                    ProductID = Convert.ToInt32(row["ProductID"]),
+                    ProductName = row["ProductName"].ToString(),
+                    Description = row["Description"].ToString(),
+                    Price = Convert.ToDecimal(row["Price"]),
+                    Stock = Convert.ToInt32(row["Stock"]),
+                    Image = row["Image"].ToString(),
+                    CategoryName = row["CategoryName"].ToString(),
+                    TotalSold = Convert.ToInt32(row["TotalSold"]),
+                    TotalRevenue = Convert.ToDecimal(row["TotalRevenue"])
+                });
+            }
+
+            return topProducts;
         }
 
         // User Management
@@ -435,81 +508,81 @@ namespace Ecom.Controllers
         }
 
         // Replace the existing UpdateOrderStatus method in AdminController with this improved version
-        [HttpPost]
-        public IActionResult UpdateOrderStatus(int orderId, string status)
+[HttpPost]
+public IActionResult UpdateOrderStatus(int orderId, string status)
+{
+    if (!IsAdmin()) return RedirectToAction("Login", "Account");
+
+    try
+    {
+        // Get the current order status before updating
+        var currentOrderQuery = $"SELECT Status FROM Orders WHERE OrderID = {orderId}";
+        var currentResult = _db.SelectQuery(currentOrderQuery);
+
+        if (currentResult.Rows.Count == 0)
         {
-            if (!IsAdmin()) return RedirectToAction("Login", "Account");
+            TempData["Error"] = "Order not found.";
+            return RedirectToAction("Orders");
+        }
 
-            try
+        string currentStatus = currentResult.Rows[0]["Status"].ToString();
+
+        // Handle stock restoration when cancelling an order
+        if (status == "Cancelled" && currentStatus != "Cancelled")
+        {
+            RestoreOrderStock(orderId);
+            TempData["Success"] = "Order cancelled successfully! Product stock has been restored.";
+        }
+        // Handle stock reduction when un-cancelling an order (changing from Cancelled to another status)
+        else if (currentStatus == "Cancelled" && status != "Cancelled")
+        {
+            if (!ReduceOrderStock(orderId))
             {
-                // Get the current order status before updating
-                var currentOrderQuery = $"SELECT Status FROM Orders WHERE OrderID = {orderId}";
-                var currentResult = _db.SelectQuery(currentOrderQuery);
+                TempData["Error"] = "Cannot change order status: Insufficient stock for some products.";
+                return RedirectToAction("Orders");
+            }
+            TempData["Success"] = "Order status updated successfully! Product stock has been adjusted.";
+        }
+        else
+        {
+            TempData["Success"] = "Order status updated successfully!";
+        }
 
-                if (currentResult.Rows.Count == 0)
-                {
-                    TempData["Error"] = "Order not found.";
-                    return RedirectToAction("Orders");
-                }
-
-                string currentStatus = currentResult.Rows[0]["Status"].ToString();
-
-                // Handle stock restoration when cancelling an order
-                if (status == "Cancelled" && currentStatus != "Cancelled")
-                {
-                    RestoreOrderStock(orderId);
-                    TempData["Success"] = "Order cancelled successfully! Product stock has been restored.";
-                }
-                // Handle stock reduction when un-cancelling an order (changing from Cancelled to another status)
-                else if (currentStatus == "Cancelled" && status != "Cancelled")
-                {
-                    if (!ReduceOrderStock(orderId))
-                    {
-                        TempData["Error"] = "Cannot change order status: Insufficient stock for some products.";
-                        return RedirectToAction("Orders");
-                    }
-                    TempData["Success"] = "Order status updated successfully! Product stock has been adjusted.";
-                }
-                else
-                {
-                    TempData["Success"] = "Order status updated successfully!";
-                }
-
-                // Prepare the update query with date handling
-                string updateQuery;
-
-                if (status == "Shipped")
-                {
-                    // Set ShippedDate to current datetime when status is changed to Shipped
-                    updateQuery = $"UPDATE Orders SET Status = '{status}', ShippedDate = NOW() WHERE OrderID = {orderId}";
-                }
-                else if (status == "Delivered")
-                {
-                    // Set DeliveredDate to current datetime when status is changed to Delivered
-                    // Also ensure ShippedDate is set if it wasn't already
-                    updateQuery = $@"UPDATE Orders 
+        // Prepare the update query with date handling
+        string updateQuery;
+        
+        if (status == "Shipped")
+        {
+            // Set ShippedDate to current datetime when status is changed to Shipped
+            updateQuery = $"UPDATE Orders SET Status = '{status}', ShippedDate = NOW() WHERE OrderID = {orderId}";
+        }
+        else if (status == "Delivered")
+        {
+            // Set DeliveredDate to current datetime when status is changed to Delivered
+            // Also ensure ShippedDate is set if it wasn't already
+            updateQuery = $@"UPDATE Orders 
                             SET Status = '{status}', 
                                 DeliveredDate = NOW(),
                                 ShippedDate = COALESCE(ShippedDate, NOW())
                             WHERE OrderID = {orderId}";
-                }
-                else
-                {
-                    // For other status changes, just update the status
-                    updateQuery = $"UPDATE Orders SET Status = '{status}' WHERE OrderID = {orderId}";
-                }
-
-                // Execute the update query
-                _db.ExecuteQuery(updateQuery);
-
-                return RedirectToAction("OrderDetails", new { id = orderId });
-            }
-            catch (Exception ex)
-            {
-                TempData["Error"] = $"Error updating order status: {ex.Message}";
-                return RedirectToAction("Orders");
-            }
         }
+        else
+        {
+            // For other status changes, just update the status
+            updateQuery = $"UPDATE Orders SET Status = '{status}' WHERE OrderID = {orderId}";
+        }
+
+        // Execute the update query
+        _db.ExecuteQuery(updateQuery);
+
+        return RedirectToAction("OrderDetails", new { id = orderId });
+    }
+    catch (Exception ex)
+    {
+        TempData["Error"] = $"Error updating order status: {ex.Message}";
+        return RedirectToAction("Orders");
+    }
+}
 
         // Add this new method to handle stock restoration when cancelling orders
         private void RestoreOrderStock(int orderId)
@@ -604,7 +677,6 @@ namespace Ecom.Controllers
             return View(order);
         }
 
-        // Category Management
         public IActionResult Categories()
         {
             if (!IsAdmin()) return RedirectToAction("Login", "Account");
@@ -641,7 +713,98 @@ namespace Ecom.Controllers
             return View(category);
         }
 
-        // User Helper Methods
+        [HttpGet]
+        public IActionResult EditCategory(int id)
+        {
+            if (!IsAdmin()) return RedirectToAction("Login", "Account");
+
+            try
+            {
+                // Use parameterized query to prevent SQL injection
+                var query = "SELECT * FROM Categories WHERE CategoryId = @CategoryId";
+                var parameters = new Dictionary<string, object>
+        {
+            { "@CategoryId", id }
+        };
+
+                var dt = _db.SelectQuery(query, parameters);
+
+                if (dt.Rows.Count == 0)
+                    return NotFound();
+
+                var category = new Category
+                {
+                    CategoryID = Convert.ToInt32(dt.Rows[0]["CategoryId"]),
+                    CategoryName = dt.Rows[0]["CategoryName"]?.ToString() ?? string.Empty,
+                    Description = dt.Rows[0]["Description"]?.ToString() ?? string.Empty
+                };
+
+                return View(category);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Error loading category.";
+                return RedirectToAction("Categories");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult EditCategory(Category category)
+        {
+            if (!IsAdmin()) return RedirectToAction("Login", "Account");
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Use parameterized query to prevent SQL injection
+                    var query = @"UPDATE Categories 
+                         SET CategoryName = @CategoryName, Description = @Description 
+                         WHERE CategoryId = @CategoryId";
+
+                    var parameters = new Dictionary<string, object>
+            {
+                { "@CategoryName", category.CategoryName },
+                { "@Description", category.Description },
+                { "@CategoryId", category.CategoryID }
+            };
+
+                    var result = _db.ExecuteQuery(query, parameters);
+
+                    if (result > 0)
+                    {
+                        TempData["Success"] = "Category updated successfully!";
+                        return RedirectToAction("Categories");
+                    }
+                    else
+                    {
+                        TempData["Error"] = "No changes were made or category not found.";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = "Error updating category.";
+                }
+            }
+
+            return View(category);
+        }
+        [HttpPost]
+        public IActionResult DeleteCategory(int id)
+        {
+            if (!IsAdmin()) return RedirectToAction("Login", "Account");
+
+            var query = $"DELETE FROM Categories WHERE CategoryId = {id}";
+            var result = _db.ExecuteQuery(query);
+
+            if (result > 0)
+                TempData["Success"] = "Category deleted successfully!";
+            else
+                TempData["Error"] = "Error deleting category.";
+
+            return RedirectToAction("Categories");
+        }
+
         private List<User> GetAllUsers()
         {
             var query = "SELECT * FROM Users ORDER BY CreatedAt DESC";
@@ -710,34 +873,7 @@ namespace Ecom.Controllers
             }
         }
 
-        // Other Helper Methods
-        private int GetTotalProducts()
-        {
-            var query = "SELECT COUNT(*) as Count FROM Products WHERE Visible = TRUE";
-            var result = _db.SelectQuery(query);
-            return Convert.ToInt32(result.Rows[0]["Count"]);
-        }
-
-        private int GetTotalOrders()
-        {
-            var query = "SELECT COUNT(*) as Count FROM Orders";
-            var result = _db.SelectQuery(query);
-            return Convert.ToInt32(result.Rows[0]["Count"]);
-        }
-
-        private int GetTotalUsers()
-        {
-            var query = "SELECT COUNT(*) as Count FROM Users WHERE Role = 'Customer'";
-            var result = _db.SelectQuery(query);
-            return Convert.ToInt32(result.Rows[0]["Count"]);
-        }
-
-        private decimal GetTotalRevenue()
-        {
-            var query = "SELECT COALESCE(SUM(TotalAmount), 0) as Revenue FROM Orders WHERE Status = 'Delivered'";
-            var result = _db.SelectQuery(query);
-            return Convert.ToDecimal(result.Rows[0]["Revenue"]);
-        }
+     
 
         private List<Product> GetAllProducts()
         {
@@ -840,9 +976,6 @@ namespace Ecom.Controllers
             return categories;
         }
 
-
-        // Add this method to your AdminController class
-
         [HttpGet]
         public IActionResult OrderDetails(int id)
         {
@@ -858,10 +991,9 @@ namespace Ecom.Controllers
             return View(order);
         }
 
-        // Add this helper method to your AdminController class
         private Order GetOrderDetailsForAdmin(int orderId)
         {
-            // Get order with user information
+           
             var orderQuery = $@"SELECT o.*, u.Firstname, u.Lastname, u.Email, u.Address as UserAddress 
                        FROM Orders o
                        JOIN Users u ON o.UserID = u.UserID
@@ -879,13 +1011,12 @@ namespace Ecom.Controllers
                 Status = orderRow["Status"].ToString(),
                 TotalAmount = Convert.ToDecimal(orderRow["TotalAmount"]),
                 ShippingAddress = orderRow["ShippingAddress"].ToString(),
-                // Add user information to the order object (you might need to add these properties to your Order model)
+              
                 CustomerName = $"{orderRow["Firstname"]} {orderRow["Lastname"]}",
                 CustomerEmail = orderRow["Email"].ToString(),
                 UserAddress = orderRow["UserAddress"].ToString()
             };
 
-            // Get order items with product details
             var itemsQuery = $@"SELECT oi.*, p.ProductName, p.Description, p.Image 
                        FROM OrderItems oi
                        JOIN Products p ON oi.ProductID = p.ProductID

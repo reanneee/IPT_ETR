@@ -1,0 +1,92 @@
+﻿<!-- Views/Reports/TopSelling.cshtml -->
+@model List<TopSellingProductModel>
+@{
+    ViewData["Title"] = "Top Selling Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Top Selling Products</h2>
+
+    <!-- Date Range and Limit Filter -->
+    <form method="get" class="mb-4">
+        <div class="row">
+            <div class="col-md-3">
+                <label for="startDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="startDate" name="startDate" value="@ViewBag.StartDate">
+            </div>
+            <div class="col-md-3">
+                <label for="endDate" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="endDate" name="endDate" value="@ViewBag.EndDate">
+            </div>
+
+            <div class="col-md-2">
+                <label for="limit" class="form-label">Show Top</label>
+                <select class="form-control" id="limit" name="limit">
+                    <option value="5" selected="@(ViewBag.Limit ==5)">5</option>
+                    <option value="10" selected="@(ViewBag.Limit ==10)">10</option>
+                    <option value="20" selected="@(ViewBag.Limit ==20)">20</option>
+                    <option value="50" selected="@(ViewBag.Limit ==50)">50</option>
+                </select>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">Filter</button>
+                <a href="@Url.Action("Index", "Reports")" class="btn btn-secondary ms-2">Back</a>
+            </div>
+        </div>
+    </form>
+
+    <!-- Top Selling Products Table -->
+    <div class="card">
+        <div class="card-header">
+            <h5>Top @ViewBag.Limit Selling Products</h5>
+        </div>
+        <div class="card-body">
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Qty Sold</th>
+                                <th>Total Revenue</th>
+                                <th>Orders</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                var product = Model[i];
+                                <tr>
+                                    <td>
+                                        <span class="badge badge-primary">@(i + 1)</span>
+                                    </td>
+                                    <td>
+                                        <strong>@product.ProductName</strong>
+                                    </td>
+                                    <td>@product.CategoryName</td>
+                                    <td>$@product.Price.ToString("N2")</td>
+                                    <td>
+                                        <span class="badge badge-success">@product.TotalQuantitySold</span>
+                                    </td>
+                                    <td>
+                                        <strong>$@product.TotalRevenue.ToString("N2")</strong>
+                                    </td>
+                                    <td>@product.NumberOfOrders</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">No sales data found for the selected date range.</p>
+            }
+        </div>
+    </div>
+</div>

@@ -46,7 +46,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var user in Model)
+
+                                @foreach (var user in Model.Where(u => u.Role == "Admin"))
                                 {
                                     <tr>
                                         <td>@user.UserID</td>
@@ -60,9 +61,7 @@
                                         </td>
                                         <td>@user.Email</td>
                                         <td>
-                                            <span class="badge @(user.Role == "Admin" ? "bg-danger" : "bg-primary")">
-                                                @user.Role
-                                            </span>
+                                            <span class="badge bg-danger">@user.Role</span>
                                         </td>
                                         <td>@user.Address</td>
                                         <td>@user.CreatedAt.ToString("MMM dd, yyyy")</td>
@@ -85,6 +84,7 @@
                                         </td>
                                     </tr>
                                 }
+
                             </tbody>
                         </table>
                     </div>

@@ -1,0 +1,93 @@
+﻿<!-- Views/Reports/SalesSummary.cshtml -->
+@model SalesSummaryModel
+@{
+    ViewData["Title"] = "Sales Summary Report";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Sales Summary Report</h2>
+
+    <!-- Date Range Filter -->
+    <form method="get" class="mb-4">
+        <div class="row">
+            <div class="col-md-3">
+                <label for="startDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="startDate" name="startDate" value="@ViewBag.StartDate">
+            </div>
+            <div class="col-md-3">
+                <label for="endDate" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="endDate" name="endDate" value="@ViewBag.EndDate">
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">Filter</button>
+                <a href="@Url.Action("Index", "Reports")" class="btn btn-secondary ms-2">Back</a>
+            </div>
+        </div>
+    </form>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Total Orders</h5>
+                    <h3 class="text-primary">@Model.TotalOrders</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Total Revenue</h5>
+                    <h3 class="text-success">$@Model.TotalRevenue.ToString("N2")</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Average Order Value</h5>
+                    <h3 class="text-info">$@Model.AverageOrderValue.ToString("N2")</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daily Sales Table -->
+    <div class="card">
+        <div class="card-header">
+            <h5>Daily Sales Breakdown</h5>
+        </div>
+        <div class="card-body">
+            @if (Model.DailySales.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Orders</th>
+                                <th>Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var day in Model.DailySales)
+                            {
+                                <tr>
+                                    <td>@day.Date.ToString("MMM dd, yyyy")</td>
+                                    <td>@day.OrderCount</td>
+                                    <td>$@day.Revenue.ToString("N2")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">No sales data found for the selected date range.</p>
+            }
+        </div>
+    </div>
+</div>
