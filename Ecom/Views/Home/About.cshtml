@@ -1,61 +1,372 @@
-﻿@{
-    ViewData["Title"] = "About Us - IPT Endterm Plants";
-}
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - IPT Endterm Plants</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #1a5d4a;
+            --primary-green-light: #2a7a63;
+            --primary-green-dark: #0f3d32;
+            --primary-green-ultra-light: rgba(26, 93, 74, 0.1);
+        }
 
-<div class="bg-success text-white text-center py-5">
-    <div class="container">
-        <h1 class="display-4">Welcome to IPT Endterm</h1>
-        <p class="lead">Your ultimate destination for thriving plants and gardening essentials.</p>
-    </div>
-</div>
+        .bg-primary-green {
+            background-color: var(--primary-green) !important;
+        }
 
-<div class="container py-5">
-    <div class="row">
-        <div class="col-lg-10 mx-auto text-center">
-            <h2 class="text-success mb-4">Our Passion for Plants</h2>
-            <p class="lead mb-5">
-                At IPT Endterm, we believe in enriching lives by bringing the beauty and tranquility of nature into your home or garden.
-                We're dedicated to curating a diverse selection of healthy, vibrant plants, along with all the tools and knowledge you need to help them flourish.
-            </p>
-        </div>
-    </div>
+        .text-primary-green {
+            color: var(--primary-green) !important;
+        }
 
-    <div class="row mt-4">
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 text-center shadow-sm">
-                <div class="card-body">
-                    <i class="fas fa-leaf fa-4x text-success mb-3"></i>
-                    <h4 class="card-title">Hand-Picked Selection</h4>
-                    <p class="card-text">Every plant in our collection is carefully chosen by our plant experts for its health, beauty, and unique appeal.</p>
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+            .hero-section::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+                opacity: 0.3;
+            }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card {
+            border: none;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+            .card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 35px rgba(26, 93, 74, 0.2) !important;
+            }
+
+        .card-body i {
+            color: var(--primary-green) !important;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-body i {
+            transform: scale(1.1);
+        }
+
+        .feature-number {
+            background: var(--primary-green);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        .stats-section {
+            background: var(--primary-green-ultra-light);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-green);
+            line-height: 1;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+
+            .timeline-item::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 20px;
+                height: 20px;
+                background: var(--primary-green);
+                border-radius: 50%;
+                border: 4px solid white;
+                box-shadow: 0 0 0 4px var(--primary-green-ultra-light);
+            }
+
+            .timeline-item::after {
+                content: '';
+                position: absolute;
+                left: 9px;
+                top: 20px;
+                width: 2px;
+                height: calc(100% + 1rem);
+                background: var(--primary-green-ultra-light);
+            }
+
+            .timeline-item:last-child::after {
+                display: none;
+            }
+
+        .btn-primary-green {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            color: white;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-primary-green:hover {
+                background-color: var(--primary-green-dark);
+                border-color: var(--primary-green-dark);
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(26, 93, 74, 0.3);
+            }
+
+        .section-divider {
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary-green), transparent);
+            margin: 3rem 0;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section text-white text-center py-5">
+        <div class="container hero-content">
+            <h1 class="display-4 fw-bold mb-3">Welcome to IPT Endterm</h1>
+            <p class="lead fs-4 mb-4">Your ultimate destination for thriving plants and gardening essentials.</p>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="feature-number">5+</div>
+                    <p class="mb-0">Years Experience</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-number">1K+</div>
+                    <p class="mb-0">Happy Customers</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-number">500+</div>
+                    <p class="mb-0">Plant Varieties</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 text-center shadow-sm">
-                <div class="card-body">
-                    <i class="fas fa-seedling fa-4x text-success mb-3"></i>
-                    <h4 class="card-title">Expert Growing Advice</h4>
-                    <p class="card-text">We provide detailed care guides and personalized tips to help your green friends thrive, perfect for both beginners and seasoned gardeners.</p>
+    </div>
+
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto text-center">
+                <h2 class="text-primary-green mb-4 fw-bold">Our Passion for Plants</h2>
+                <p class="lead mb-5 text-muted">
+                    At IPT Endterm, we believe in enriching lives by bringing the beauty and tranquility of nature into your home or garden.
+                    We're dedicated to curating a diverse selection of healthy, vibrant plants, along with all the tools and knowledge you need to help them flourish.
+                </p>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="row mt-5">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <div class="card-body p-4">
+                        <i class="fas fa-leaf fa-4x mb-3"></i>
+                        <h4 class="card-title text-primary-green fw-bold">Hand-Picked Selection</h4>
+                        <p class="card-text">Every plant in our collection is carefully chosen by our plant experts for its health, beauty, and unique appeal. We source from trusted growers nationwide.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <div class="card-body p-4">
+                        <i class="fas fa-seedling fa-4x mb-3"></i>
+                        <h4 class="card-title text-primary-green fw-bold">Expert Growing Advice</h4>
+                        <p class="card-text">We provide detailed care guides and personalized tips to help your green friends thrive, perfect for both beginners and seasoned gardeners.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <div class="card-body p-4">
+                        <i class="fas fa-shipping-fast fa-4x mb-3"></i>
+                        <h4 class="card-title text-primary-green fw-bold">Careful & Timely Delivery</h4>
+                        <p class="card-text">Your plants are packed with utmost care and shipped swiftly to ensure they arrive fresh, healthy, and ready to flourish in their new home.</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 text-center shadow-sm">
-                <div class="card-body">
-                    <i class="fas fa-truck-plant fa-4x text-success mb-3"></i>
-                    <h4 class="card-title">Careful & Timely Delivery</h4>
-                    <p class="card-text">Your plants are packed with utmost care and shipped swiftly to ensure they arrive fresh, healthy, and ready to flourish in their new home.</p>
+
+        <div class="section-divider"></div>
+
+        <!-- Our Story Section -->
+        <div class="row mt-5">
+            <div class="col-lg-6">
+                <h2 class="text-primary-green mb-4 fw-bold">Our Story</h2>
+                <div class="timeline-item">
+                    <h5 class="text-primary-green fw-bold">2019 - The Beginning</h5>
+                    <p class="text-muted">Started as a small local nursery with a passion for bringing nature closer to people's homes.</p>
+                </div>
+                <div class="timeline-item">
+                    <h5 class="text-primary-green fw-bold">2021 - Going Digital</h5>
+                    <p class="text-muted">Launched our online platform to reach plant lovers across the country during the pandemic.</p>
+                </div>
+                <div class="timeline-item">
+                    <h5 class="text-primary-green fw-bold">2023 - Expert Team</h5>
+                    <p class="text-muted">Expanded our team with certified horticulturists and plant care specialists.</p>
+                </div>
+                <div class="timeline-item">
+                    <h5 class="text-primary-green fw-bold">2024 - Community Growth</h5>
+                    <p class="text-muted">Built a thriving community of over 1,000+ plant enthusiasts and counting!</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="stats-section">
+                    <h3 class="text-primary-green text-center mb-4 fw-bold">Why Choose Us?</h3>
+                    <div class="row">
+                        <div class="col-6 stat-item mb-4">
+                            <div class="stat-number">99%</div>
+                            <p class="text-muted mb-0">Customer Satisfaction</p>
+                        </div>
+                        <div class="col-6 stat-item mb-4">
+                            <div class="stat-number">500+</div>
+                            <p class="text-muted mb-0">Plant Varieties</p>
+                        </div>
+                        <div class="col-6 stat-item">
+                            <div class="stat-number">24/7</div>
+                            <p class="text-muted mb-0">Plant Care Support</p>
+                        </div>
+                        <div class="col-6 stat-item">
+                            <div class="stat-number">100%</div>
+                            <p class="text-muted mb-0">Health Guarantee</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Team Section -->
+        <div class="row mt-5">
+            <div class="col-12 text-center mb-5">
+                <h2 class="text-primary-green fw-bold">Meet Our Green Experts</h2>
+                <p class="lead text-muted">The passionate team behind your plant success</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="bg-primary-green text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="fas fa-user-tie fa-2x"></i>
+                        </div>
+                        <h5 class="text-primary-green fw-bold">Sarah Johnson</h5>
+                        <p class="text-muted mb-2">Lead Horticulturist</p>
+                        <p class="card-text small">15+ years of experience in plant care and cultivation. Specializes in tropical and indoor plants.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="bg-primary-green text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="fas fa-user-graduate fa-2x"></i>
+                        </div>
+                        <h5 class="text-primary-green fw-bold">Mike Chen</h5>
+                        <p class="text-muted mb-2">Plant Care Specialist</p>
+                        <p class="card-text small">Expert in plant diseases and pest management. Your go-to person for troubleshooting plant problems.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="bg-primary-green text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="fas fa-user-friends fa-2x"></i>
+                        </div>
+                        <h5 class="text-primary-green fw-bold">Emma Rodriguez</h5>
+                        <p class="text-muted mb-2">Community Manager</p>
+                        <p class="card-text small">Connects plant lovers worldwide and organizes workshops and events for our growing community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="row mt-5">
+            <div class="col-lg-10 mx-auto text-center">
+                <h2 class="text-primary-green mb-4 fw-bold">Join Our Green Community</h2>
+                <p class="lead mb-4 text-muted">
+                    Connect with fellow plant enthusiasts, share your growing journey, and discover new tips and tricks to cultivate a greener life.
+                    Our community is more than just plants - it's about creating lasting connections with nature and each other.
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <button class="btn btn-primary-green">
+                        <i class="fab fa-facebook-f me-2"></i>
+                        Follow on Facebook
+                    </button>
+                    <button class="btn btn-outline-success">
+                        <i class="fab fa-instagram me-2"></i>
+                        Instagram Community
+                    </button>
+                    <button class="btn btn-outline-success">
+                        <i class="fas fa-newsletter me-2"></i>
+                        Join Newsletter
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mission & Values -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="bg-light p-5 rounded shadow-sm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="text-primary-green fw-bold mb-3">
+                                <i class="fas fa-bullseye me-2"></i>Our Mission
+                            </h3>
+                            <p class="text-muted">To make plant parenthood accessible, enjoyable, and successful for everyone, regardless of experience level. We're here to guide you through every step of your green journey.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="text-primary-green fw-bold mb-3">
+                                <i class="fas fa-heart me-2"></i>Our Values
+                            </h3>
+                            <ul class="list-unstyled text-muted">
+                                <li class="mb-2"><i class="fas fa-check-circle text-primary-green me-2"></i>Quality & Health First</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-primary-green me-2"></i>Sustainable Practices</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-primary-green me-2"></i>Customer Education</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-primary-green me-2"></i>Community Building</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row mt-5">
-        <div class="col-lg-10 mx-auto text-center">
-            <h2 class="text-success mb-4">Join Our Green Community</h2>
-            <p class="lead">
-                Connect with fellow plant enthusiasts, share your growing journey, and discover new tips and tricks to cultivate a greener life.
-            </p>
-        </div>
-    </div>
-</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

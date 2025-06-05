@@ -1,68 +1,189 @@
-﻿@{
-    ViewData["Title"] = "Contact Us - IPT Endterm Plants";
-}
-<div class="bg-success text-white text-center py-5">
-    <div class="container">
-        <h1 class="display-4">Get in Touch</h1>
-        <p class="lead">We're here to help your plant journey flourish.</p>
-    </div>
-</div>
-<div class="container py-5">
-    <div class="row">
-        <div class="col-lg-10 mx-auto text-center">
-            <h2 class="text-success mb-4">Contact IPT Endterm</h2>
-            <p class="lead mb-5">
-                Have questions about plants, orders, or need growing advice?
-                Our team is ready to help you cultivate success.
-            </p>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - IPT Endterm Plants</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #1a5d4a;
+            --primary-green-light: #2a7a63;
+            --primary-green-dark: #0f3d32;
+        }
+
+        .bg-primary-green {
+            background-color: var(--primary-green) !important;
+        }
+
+        .text-primary-green {
+            color: var(--primary-green) !important;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 8px 25px rgba(26, 93, 74, 0.15) !important;
+        }
+
+        .card-body i {
+            color: var(--primary-green) !important;
+        }
+
+        .btn-primary-green {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            color: white;
+        }
+
+            .btn-primary-green:hover {
+                background-color: var(--primary-green-dark);
+                border-color: var(--primary-green-dark);
+                color: white;
+            }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
+        }
+
+        .contact-info {
+            border-left: 4px solid var(--primary-green);
+            padding-left: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section text-white text-center py-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Get in Touch</h1>
+            <p class="lead fs-4">We're here to help your plant journey flourish.</p>
         </div>
     </div>
-    <div class="row mt-4">
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 text-center shadow-sm">
-                <div class="card-body">
-                    <i class="fas fa-map-marker-alt fa-4x text-success mb-3"></i>
-                    <h4 class="card-title">Visit Our Nursery</h4>
-                    <p class="card-text">
-                        123 Commerce Street<br>
-                        Business District<br>
-                        City, State 12345
-                    </p>
+
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto text-center">
+                <h2 class="text-primary-green mb-4 fw-bold">Contact IPT Endterm</h2>
+                <p class="lead mb-5 text-muted">
+                    Have questions about plants, orders, or need growing advice?
+                    Our team is ready to help you cultivate success.
+                </p>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 text-center shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <i class="fas fa-map-marker-alt fa-4x mb-3"></i>
+                        <h4 class="card-title text-primary-green fw-bold">Visit Our Nursery</h4>
+                        <div class="contact-info">
+                            <p class="card-text mb-0">
+                                123 Commerce Street<br>
+                                Business District<br>
+                                City, State 12345
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 text-center shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <i class="fas fa-phone fa-4x mb-3"></i>
+                        <h4 class="card-title text-primary-green fw-bold">Call Us</h4>
+                        <div class="contact-info">
+                            <p class="card-text mb-2">
+                                <strong>(555) 123-4567</strong>
+                            </p>
+                            <small class="text-muted">
+                                Mon-Fri: 9AM-6PM<br>
+                                Sat-Sun: 10AM-4PM
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 text-center shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <i class="fas fa-envelope fa-4x mb-3"></i>
+                        <h4 class="card-title text-primary-green fw-bold">Email Support</h4>
+                        <div class="contact-info">
+                            <p class="card-text mb-2">
+                                <strong>contact@ecommerce.com</strong>
+                            </p>
+                            <small class="text-muted">We respond within 24 hours</small>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 text-center shadow-sm">
-                <div class="card-body">
-                    <i class="fas fa-phone fa-4x text-success mb-3"></i>
-                    <h4 class="card-title">Call Us</h4>
-                    <p class="card-text">
-                        (555) 123-4567<br>
-                        <small class="text-muted">Mon-Fri: 9AM-6PM<br>Sat-Sun: 10AM-4PM</small>
+
+        <div class="row mt-5">
+            <div class="col-lg-10 mx-auto text-center">
+                <div class="bg-light p-5 rounded shadow-sm">
+                    <h2 class="text-primary-green mb-4 fw-bold">Ready to Grow Together?</h2>
+                    <p class="lead mb-4">
+                        Whether you're a beginner or experienced gardener, we're here to support your green journey.
                     </p>
+                    <button class="btn btn-primary-green btn-lg px-5 py-3">
+                        <i class="fas fa-leaf me-2"></i>
+                        Start Your Plant Journey
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 text-center shadow-sm">
-                <div class="card-body">
-                    <i class="fas fa-envelope fa-4x text-success mb-3"></i>
-                    <h4 class="card-title">Email Support</h4>
-                    <p class="card-text">
-                        contact@ecommerce.com<br>
-                        <small class="text-muted">We respond within 24 hours</small>
-                    </p>
+
+        <!-- Additional Contact Section -->
+        <div class="row mt-5">
+            <div class="col-lg-8 mx-auto">
+                <div class="card border-0 shadow">
+                    <div class="card-header bg-primary-green text-white text-center py-3">
+                        <h3 class="mb-0"><i class="fas fa-seedling me-2"></i>Quick Contact Form</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label text-primary-green fw-semibold">Name</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Your full name">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label text-primary-green fw-semibold">Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="your@email.com">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subject" class="form-label text-primary-green fw-semibold">Subject</label>
+                                <select class="form-select" id="subject">
+                                    <option selected>Choose your inquiry type...</option>
+                                    <option value="plant-care">Plant Care Advice</option>
+                                    <option value="order">Order Inquiry</option>
+                                    <option value="general">General Question</option>
+                                    <option value="complaint">Complaint/Issue</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label for="message" class="form-label text-primary-green fw-semibold">Message</label>
+                                <textarea class="form-control" id="message" rows="4" placeholder="Tell us how we can help you..."></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary-green btn-lg px-5">
+                                    <i class="fas fa-paper-plane me-2"></i>
+                                    Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row mt-5">
-        <div class="col-lg-10 mx-auto text-center">
-            <h2 class="text-success mb-4">Ready to Grow Together?</h2>
-            <p class="lead">
-                Whether you're a beginner or experienced gardener, we're here to support your green journey.
-                @* Sana hindi kami bumagsak sa finals *@
-            </p>
-        </div>
-    </div>
-@* </div> *@
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

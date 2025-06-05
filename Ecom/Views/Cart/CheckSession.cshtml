@@ -30,8 +30,8 @@
                             <div class="card-body">
                                 <h5 class="card-title">@item.ProductName</h5>
                                 <p class="card-text">
-                                    <strong>Price:</strong> $@item.Price.ToString("F2")<br>
-                                    <strong>Subtotal:</strong> $@item.Total.ToString("F2")
+                                    <strong>Price:</strong> ₱@item.Price.ToString("F2")<br>
+                                    <strong>Subtotal:</strong> ₱@item.Total.ToString("F2")
                                 </p>
                                 <div class="d-flex align-items-center">
                                     <form asp-action="UpdateQuantity" method="post" class="d-inline">
@@ -59,7 +59,7 @@
                     </div>
                     <div class="card-body">
                         <p><strong>Total Items:</strong> @Model.Sum(x => x.Quantity)</p>
-                        <p><strong>Total Amount:</strong> $@Model.Sum(x => x.Total).ToString("F2")</p>
+                        <p><strong>Total Amount:</strong> ₱@Model.Sum(x => x.Total).ToString("F2")</p>
                         <hr>
                         <div class="alert alert-info">
                             <strong>Sign in to checkout</strong><br>
