@@ -4,95 +4,372 @@
     ViewData["Title"] = "Shopping Cart";
 }
 
-<h1>Shopping Cart</h1>
+<style>
+    :root {
+        --theme-primary: #2d5a4e;
+        --theme-primary-light: #3d6a5e;
+        --theme-primary-dark: #1d4a3e;
+    }
 
-@if (Model.Any())
-{
-    <div class="row">
-        <div class="col-md-8">
-            @foreach (var item in Model)
-            {
-                <div class="card mb-3">
-                    <div class="row g-0">
-                        <div class="col-md-3">
-                            @if (!string.IsNullOrEmpty(item.Image))
-                            {
-                                <img src="@item.Image" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="@item.ProductName">
-                            }
-                            else
-                            {
-                                <div class="bg-light d-flex align-items-center justify-content-center h-100 rounded-start">
-                                    <i class="fas fa-image fa-2x text-muted"></i>
-                                </div>
-                            }
-                        </div>
-                        <div class="col-md-9">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col-md-6">
-                                        <h5 class="card-title">@item.ProductName</h5>
-                                        <p class="text-muted">Price: $@item.Price.ToString("F2")</p>
+    .cart-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .cart-header {
+        color: var(--theme-primary);
+        margin-bottom: 2rem;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .cart-card {
+        transition: all 0.3s ease;
+        border: 1px solid #e3e6f0;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 4px rgba(45, 90, 78, 0.1);
+    }
+
+    .cart-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(45, 90, 78, 0.15);
+        border-color: var(--theme-primary);
+    }
+
+    .product-image {
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px 0 0 8px;
+    }
+
+    .image-placeholder {
+        height: 150px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px 0 0 8px;
+    }
+
+    .product-title {
+        color: var(--theme-primary);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+
+    .product-price {
+        color: #6c757d;
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .quantity-input {
+        border: 2px solid #e3e6f0;
+        border-radius: 8px;
+        transition: border-color 0.3s ease;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .quantity-input:focus {
+        border-color: var(--theme-primary);
+        box-shadow: 0 0 0 0.2rem rgba(45, 90, 78, 0.25);
+    }
+
+    .item-total {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--theme-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .remove-btn {
+        border: 2px solid #dc3545;
+        color: #dc3545;
+        background: transparent;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .remove-btn:hover {
+        background: #dc3545;
+        color: white;
+        transform: scale(1.1);
+    }
+
+    .summary-card {
+        border: 2px solid var(--theme-primary);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(45, 90, 78, 0.1);
+        position: sticky;
+        top: 2rem;
+    }
+
+    .summary-header {
+        background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-primary-light) 100%);
+        color: white;
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    .summary-body {
+        padding: 2rem;
+        background: white;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f1f3f4;
+    }
+
+    .summary-row:last-child {
+        border-bottom: none;
+        padding-top: 1rem;
+        margin-top: 1rem;
+        border-top: 2px solid var(--theme-primary);
+    }
+
+    .summary-total {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--theme-primary);
+    }
+
+    .checkout-btn {
+        background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-primary-light) 100%);
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+
+    .checkout-btn:hover {
+        background: linear-gradient(135deg, var(--theme-primary-dark) 0%, var(--theme-primary) 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(45, 90, 78, 0.3);
+    }
+
+    .empty-cart {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: #6c757d;
+    }
+
+    .empty-cart-icon {
+        font-size: 4rem;
+        color: var(--theme-primary);
+        opacity: 0.3;
+        margin-bottom: 2rem;
+    }
+
+    .continue-shopping-btn {
+        background: var(--theme-primary);
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 1.5rem;
+    }
+
+    .continue-shopping-btn:hover {
+        background: var(--theme-primary-dark);
+        transform: translateY(-2px);
+        color: white;
+        text-decoration: none;
+    }
+
+    .login-prompt {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 1.5rem;
+        border-radius: 8px;
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    .login-link {
+        color: var(--theme-primary);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .login-link:hover {
+        color: var(--theme-primary-dark);
+        text-decoration: underline;
+    }
+
+    @@media (max-width: 768px) {
+        .cart-container {
+            padding: 1rem 0.5rem;
+        }
+
+        .summary-card {
+            position: relative;
+            top: 0;
+            margin-top: 2rem;
+        }
+
+        .product-image,
+        .image-placeholder {
+            height: 120px;
+        }
+
+        .cart-card .row {
+            --bs-gutter-x: 0.5rem;
+        }
+
+        .summary-body {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<div class="cart-container">
+    <h1 class="cart-header">
+        <i class="fas fa-shopping-cart me-3"></i>
+        Shopping Cart
+    </h1>
+
+    @if (Model.Any())
+    {
+        <div class="row">
+            <div class="col-lg-8">
+                @foreach (var item in Model)
+                {
+                    <div class="cart-card">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                @if (!string.IsNullOrEmpty(item.Image))
+                                {
+                                    <img src="@item.Image" class="product-image w-100" alt="@item.ProductName">
+                                }
+                                else
+                                {
+                                    <div class="image-placeholder">
+                                        <i class="fas fa-image fa-3x" style="color: var(--theme-primary); opacity: 0.3;"></i>
                                     </div>
-                                    <div class="col-md-3">
-                                        <form asp-action="UpdateQuantity" method="post" class="d-inline">
-                                            <input type="hidden" name="productId" value="@item.ProductID" />
-                                            <div class="input-group input-group-sm">
-                                                <input type="number" name="quantity" value="@item.Quantity" min="1" class="form-control" onchange="this.form.submit()">
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="col-md-3 text-end">
-                                        <p class="fw-bold">$@item.Total.ToString("F2")</p>
-                                        <form asp-action="RemoveFromCart" method="post" class="d-inline">
-                                            <input type="hidden" name="productId" value="@item.ProductID" />
-                                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
+                                }
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body p-4">
+                                    <div class="row align-items-center h-100">
+                                        <div class="col-md-6">
+                                            <h5 class="product-title">@item.ProductName</h5>
+                                            <p class="product-price">
+                                                <i class="fas fa-tag me-2"></i>
+                                                $@item.Price.ToString("F2") each
+                                            </p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <form asp-action="UpdateQuantity" method="post" class="d-inline">
+                                                <input type="hidden" name="productId" value="@item.ProductID" />
+                                                <div class="mb-2">
+                                                    <label class="form-label small text-muted">Quantity</label>
+                                                </div>
+                                                <input type="number"
+                                                       name="quantity"
+                                                       value="@item.Quantity"
+                                                       min="1"
+                                                       class="form-control quantity-input"
+                                                       onchange="this.form.submit()">
+                                            </form>
+                                        </div>
+                                        <div class="col-md-3 text-end">
+                                            <div class="item-total">$@item.Total.ToString("F2")</div>
+                                            <form asp-action="RemoveFromCart" method="post" class="d-inline">
+                                                <input type="hidden" name="productId" value="@item.ProductID" />
+                                                <button type="submit" class="remove-btn" title="Remove item">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Order Summary</h5>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <span>Total Items:</span>
-                        <span>@Model.Sum(x => x.Quantity)</span>
+                }
+            </div>
+
+            <div class="col-lg-4">
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-receipt me-2"></i>
+                            Order Summary
+                        </h5>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <strong>Total Amount:</strong>
-                        <strong>$@Model.Sum(x => x.Total).ToString("F2")</strong>
+                    <div class="summary-body">
+                        <div class="summary-row">
+                            <span>
+                                <i class="fas fa-cubes me-2 text-muted"></i>
+                                Total Items:
+                            </span>
+                            <strong>@Model.Sum(x => x.Quantity)</strong>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-total">Total Amount:</span>
+                            <span class="summary-total">$@Model.Sum(x => x.Total).ToString("F2")</span>
+                        </div>
+
+                        @if (Context.Session.GetString("UserName") != null)
+                        {
+                            <a asp-controller="Order" asp-action="Checkout" class="checkout-btn btn">
+                                <i class="fas fa-credit-card me-2"></i>
+                                Proceed to Checkout
+                            </a>
+                        }
+                        else
+                        {
+                            <div class="login-prompt">
+                                <p class="mb-2">
+                                    <i class="fas fa-lock me-2"></i>
+                                    Please login to continue
+                                </p>
+                                <a asp-controller="Account" asp-action="Login" class="login-link">
+                                    Login to Checkout
+                                </a>
+                            </div>
+                        }
                     </div>
-                    <hr>
-                    @if (Context.Session.GetString("UserName") != null)
-                    {
-                        <a asp-controller="Order" asp-action="Checkout" class="btn btn-primary w-100">
-                            Proceed to Checkout
-                        </a>
-                    }
-                    else
-                    {
-                        <p class="text-muted small">Please <a asp-controller="Account" asp-action="Login">login</a> to checkout</p>
-                    }
                 </div>
             </div>
         </div>
-    </div>
-}
-else
-{
-    <div class="text-center py-5">
-        <i class="fas fa-shopping-cart fa-4x text-muted mb-3"></i>
-        <h4>Your cart is empty</h4>
-        <p class="text-muted">Add some products to get started!</p>
-        <a asp-controller="Product" asp-action="Index" class="btn btn-primary">Continue Shopping</a>
-    </div>
-}
+    }
+    else
+    {
+        <div class="empty-cart">
+            <div class="empty-cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+            <h4 class="mb-3">Your cart is empty</h4>
+            <p class="text-muted mb-0">Discover amazing products and add them to your cart!</p>
+            <a asp-controller="Product" asp-action="Index" class="continue-shopping-btn">
+                <i class="fas fa-arrow-left me-2"></i>
+                Continue Shopping
+            </a>
+        </div>
+    }
+</div>

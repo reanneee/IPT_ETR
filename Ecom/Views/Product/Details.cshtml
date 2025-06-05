@@ -21,14 +21,14 @@
         transition: color 0.3s ease;
     }
 
-    .back-button:hover {
-        color: #1e3d35;
-        text-decoration: none;
-    }
+        .back-button:hover {
+            color: #1e3d35;
+            text-decoration: none;
+        }
 
-    .back-button i {
-        margin-right: 8px;
-    }
+        .back-button i {
+            margin-right: 8px;
+        }
 
 
 
@@ -37,6 +37,7 @@
             transform: translateY(-100%);
             opacity: 0;
         }
+
         to {
             transform: translateY(0);
             opacity: 1;
@@ -58,9 +59,9 @@
         transition: transform 0.3s ease;
     }
 
-    .product-image:hover {
-        transform: scale(1.02);
-    }
+        .product-image:hover {
+            transform: scale(1.02);
+        }
 
     .image-placeholder {
         height: 400px;
@@ -122,8 +123,13 @@
         font-weight: 500;
     }
 
-    .stock.low { color: #ffc107; }
-    .stock.out { color: #dc3545; }
+        .stock.low {
+            color: #ffc107;
+        }
+
+        .stock.out {
+            color: #dc3545;
+        }
 
     .stock-dot {
         width: 8px;
@@ -132,8 +138,13 @@
         background: #28a745;
     }
 
-    .stock-dot.low { background: #ffc107; }
-    .stock-dot.out { background: #dc3545; }
+        .stock-dot.low {
+            background: #ffc107;
+        }
+
+        .stock-dot.out {
+            background: #dc3545;
+        }
 
     .cart-section {
         display: flex;
@@ -151,10 +162,10 @@
         font-size: 1rem;
     }
 
-    .quantity-input:focus {
-        outline: none;
-        border-color: #2d5a4e;
-    }
+        .quantity-input:focus {
+            outline: none;
+            border-color: #2d5a4e;
+        }
 
     .add-to-cart-btn {
         background: #28a745;
@@ -167,10 +178,10 @@
         cursor: pointer;
     }
 
-    .add-to-cart-btn:hover {
-        background: #218838;
-        transform: translateY(-1px);
-    }
+        .add-to-cart-btn:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
 
     .out-of-stock {
         background: #dc3545;
@@ -209,9 +220,9 @@
             margin-bottom: 15px;
         }
 
-        .success-alert .alert-content {
-            gap: 10px;
-        }
+            .success-alert .alert-content {
+                gap: 10px;
+            }
     }
 </style>
 
