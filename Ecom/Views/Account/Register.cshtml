@@ -1,7 +1,9 @@
 ﻿@model Ecom.Models.RegisterViewModel
 @{
     ViewData["Title"] = "Register";
-}<div class="container mt-5">
+}
+
+<div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <!-- wider container -->
@@ -60,14 +62,14 @@
                     </div>
 
                     <div class="d-grid mt-3">
-                        <button type="submit" class="btn btn-primary fw-semibold rounded-3">Register</button>
+                        <button type="submit" class="btn fw-semibold rounded-3" style="background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%), #1a5d4a; color: white; border: none;">Register</button>
                     </div>
                 </form>
 
                 <div class="text-center mt-4">
                     <p class="mb-0 text-muted">
                         Already have an account?
-                        <a asp-action="Login" class="fw-semibold text-decoration-none">Login here</a>
+                        <a asp-action="Login" class="fw-semibold text-decoration-none" style="color: #1a5d4a;">Login here</a>
                     </p>
                 </div>
             </div>
