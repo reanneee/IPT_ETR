@@ -16,11 +16,14 @@
         :root {
             --sidebar-width: 250px;
             --header-height: 60px;
-            --primary-color: #2c3e50;
-            --secondary-color: #34495e;
-            --accent-color: #3498db;
+            --primary-color: #1a5d4a;
+            --secondary-color: #226b56;
+            --accent-color: #2a8f6f;
+            --accent-light: #3eb584;
             --text-light: #ecf0f1;
             --border-color: #e9ecef;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
         }
 
         body {
@@ -42,7 +45,7 @@
             z-index: 1000;
             transition: transform 0.3s ease;
             overflow-y: auto;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            box-shadow: 2px 0 10px rgba(26, 93, 74, 0.15);
         }
 
         .admin-sidebar.collapsed {
@@ -96,7 +99,7 @@
         .nav-link.active {
             background: var(--accent-color);
             color: #fff;
-            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 2px 8px rgba(42, 143, 111, 0.4);
         }
 
         .nav-link i {
@@ -172,6 +175,15 @@
             font-size: 0.9rem;
         }
 
+        .breadcrumb-nav .breadcrumb-item a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb-nav .breadcrumb-item a:hover {
+            color: var(--primary-color);
+        }
+
         .header-right {
             display: flex;
             align-items: center;
@@ -196,12 +208,13 @@
             width: 35px;
             height: 35px;
             border-radius: 50%;
-            background: var(--accent-color);
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: 600;
+            box-shadow: 0 2px 8px rgba(42, 143, 111, 0.3);
         }
 
         .user-info {
@@ -241,6 +254,36 @@
         .stats-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+
+        /* Dropdown Menu Styling */
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-radius: 8px;
+        }
+
+        .dropdown-item {
+            padding: 10px 16px;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: rgba(42, 143, 111, 0.1);
+            color: var(--primary-color);
+        }
+
+        .dropdown-item i {
+            color: var(--accent-color);
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            text-decoration: none;
         }
 
         /* Responsive Design */
@@ -296,13 +339,39 @@
             border-radius: 50%;
             border: 2px solid #fff;
         }
+
+        /* Additional Green Theme Enhancements */
+        .btn-primary {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .text-primary {
+            color: var(--accent-color) !important;
+        }
+
+        .bg-primary {
+            background-color: var(--primary-color) !important;
+        }
+
+        .border-primary {
+            border-color: var(--accent-color) !important;
+        }
     </style>
 </head>
 <body>
     <!-- Sidebar -->
     <nav class="admin-sidebar" id="adminSidebar">
         <div class="sidebar-header">
-            <h4><i class="fas fa-store"></i> EcomAdmin</h4>
+            <a class="logo" >
+                <i class="fas fa-leaf"></i>
+                Plantify
+            </a>
             <div class="subtitle">Management Panel</div>
         </div>
 
@@ -371,12 +440,7 @@
             </div>
 
             <div class="nav-section">Settings</div>
-            <div class="nav-item">
-                <a href="@Url.Action("Settings", "Admin")" class="nav-link">
-                    <i class="fas fa-cog"></i>
-                    Site Settings
-                </a>
-            </div>
+          
             <div class="nav-item">
                 <a href="@Url.Action("Logout", "Account")" class="nav-link">
                     <i class="fas fa-sign-out-alt"></i>
@@ -440,8 +504,7 @@
                         <i class="fas fa-chevron-down ms-2"></i>
                     </div>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="@Url.Action("Profile", "Admin")"><i class="fas fa-user me-2"></i>Profile</a></li>
-                        <li><a class="dropdown-item" href="@Url.Action("Settings", "Admin")"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                     
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="@Url.Action("Logout", "Account")"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                     </ul>
